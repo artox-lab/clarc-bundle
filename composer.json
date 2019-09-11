@@ -1,0 +1,27 @@
+{
+    "name": "artox-lab/clarc-bundle",
+    "description": "Build Symfony project within Clean Architecture",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Artur Turchin",
+            "email": "a.turchin@artox.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.1",
+        "symfony/http-kernel": "^4.3",
+        "pagerfanta/pagerfanta": "^2.1",
+        "league/fractal": "^0.18.0",
+        "symfony/framework-bundle": "^4.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "ArtoxLab\\Bundle\\ClarcBundle\\": ""
+        },
+        "exclude-from-classmap": [
+            "/Tests/"
+        ]
+    }
+}

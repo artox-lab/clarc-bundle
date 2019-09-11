@@ -1,0 +1,3 @@
+services:
+  artox_lab_clarc.api.serializer:
+    class: '%artox_lab_clarc.api.serializer.class%'
