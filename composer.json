@@ -13,7 +13,7 @@
         "php": ">=7.1",
         "pagerfanta/pagerfanta": "^2.1",
         "league/fractal": "^0.18.0",
-        "symfony/framework-bundle": "^4.3"
+        "symfony/framework-bundle": "^3.4"
     },
     "autoload": {
         "psr-4": {
