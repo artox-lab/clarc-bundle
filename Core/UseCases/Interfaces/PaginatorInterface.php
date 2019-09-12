@@ -11,6 +11,7 @@ namespace ArtoxLab\Bundle\ClarcBundle\Core\UseCases\Interfaces;
 
 interface PaginatorInterface
 {
+
     /**
      * Results
      *
@@ -38,4 +39,5 @@ interface PaginatorInterface
      * @return int
      */
     public function total() : int;
+
 }

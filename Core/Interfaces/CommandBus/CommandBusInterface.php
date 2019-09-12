@@ -11,12 +11,14 @@ namespace ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\CommandBus;
 
 interface CommandBusInterface
 {
+
     /**
-     * Running command
+     * Executing command
      *
      * @param object $command Command
      *
-     * @return mixed
+     * @return mixed The handler returned value
      */
     public function execute($command);
+
 }

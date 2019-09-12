@@ -1,3 +1,9 @@
 services:
   artox_lab_clarc.api.serializer:
     class: '%artox_lab_clarc.api.serializer.class%'
+
+  artox_lab_clarc.command_bus:
+    class: \ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\CommandBus\CommandBus
+    arguments: ['@command.bus']
+
+  ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\CommandBus\CommandBusInterface: '@artox_lab_clarc.command_bus'

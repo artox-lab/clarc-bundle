@@ -9,19 +9,12 @@ declare(strict_types=1);
 
 namespace ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\CommandBus;
 
-use Symfony\Component\Messenger\Envelope;
+use Symfony\Component\Messenger\HandleTrait;
 use Symfony\Component\Messenger\MessageBusInterface;
-use Symfony\Component\Messenger\Stamp\HandledStamp;
-use Symfony\Component\Messenger\Stamp\StampInterface;
 
 class CommandBus implements CommandBusInterface
 {
-    /**
-     * Message bus
-     *
-     * @var MessageBusInterface
-     */
-    protected $messageBus;
+    use HandleTrait;
 
     /**
      * CommandBus constructor.
@@ -34,18 +27,15 @@ class CommandBus implements CommandBusInterface
     }
 
     /**
-     * Running command
+     * Executing command
      *
      * @param object $command Command
      *
-     * @return mixed
+     * @return mixed The handler returned value
      */
     public function execute($command)
     {
-        $envelope = $this->messageBus->dispatch($command);
-
-        $last = $envelope->last(HandledStamp::class);
-
-        return $last->getResult();
+        return $this->handle($command);
     }
+
 }

@@ -27,7 +27,7 @@ class AbstractApiController extends AbstractController
      * Transform data to API resources
      *
      * @param array|PaginatorInterface $data        Data
-     * @param TransformerAbstract     $transformer Transformer
+     * @param TransformerAbstract      $transformer Transformer
      *
      * @return array
      */
@@ -56,7 +56,7 @@ class AbstractApiController extends AbstractController
             );
             $resource         = new Collection($results, $transformer);
             $resource->setPaginator($paginatorAdapter);
-        } elseif (is_array($data) === true && is_numeric(key($data)) === true) {
+        } else if (is_array($data) === true && is_numeric(key($data)) === true) {
             $resource = new Collection($data, $transformer);
         } else {
             $resource = new Item($data, $transformer);
