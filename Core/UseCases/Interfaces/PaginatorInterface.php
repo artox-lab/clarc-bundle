@@ -1,6 +1,6 @@
 <?php
 /**
- * todo: comment
+ * Paginator interface
  *
  * @author Artur Turchin <a.turchin@artox.com>
  */
