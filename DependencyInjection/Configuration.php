@@ -1,6 +1,6 @@
 <?php
 /**
- * todo: comment
+ * Configuration of bundle
  *
  * @author Artur Turchin <a.turchin@artox.com>
  */
@@ -9,6 +9,9 @@ declare(strict_types=1);
 
 namespace ArtoxLab\Bundle\ClarcBundle\DependencyInjection;
 
+use ArtoxLab\Bundle\ClarcBundle\ArtoxLabClarcBundle;
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition as ArrayNodeDefinition;
+use Symfony\Component\Config\Definition\Builder\NodeDefinition as NodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -22,9 +25,9 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder() : TreeBuilder
     {
-        $treeBuilder = new TreeBuilder('artox_lab_clarc');
+        $treeBuilder = new TreeBuilder(ArtoxLabClarcBundle::CONFIG_BUNDLE_NAMESPACE);
 
-        $treeBuilder->getRootNode()
+        $this->getRootNode($treeBuilder)
             ->children()
                 ->arrayNode('api')
                     ->children()
@@ -37,5 +40,21 @@ class Configuration implements ConfigurationInterface
                 ->end();
 
         return $treeBuilder;
+    }
+
+    /**
+     * Getting root node of configuration with symfony 3.4 compatibility
+     *
+     * @param TreeBuilder $treeBuilder
+     *
+     * @return ArrayNodeDefinition|NodeDefinition
+     */
+    protected function getRootNode(TreeBuilder $treeBuilder)
+    {
+        if (method_exists($treeBuilder, 'getRootNode')) {
+            return $treeBuilder->getRootNode();
+        }
+
+        return $treeBuilder->root(ArtoxLabClarcBundle::CONFIG_BUNDLE_NAMESPACE);
     }
 }
