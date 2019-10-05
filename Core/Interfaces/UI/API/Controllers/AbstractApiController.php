@@ -34,10 +34,10 @@ class AbstractApiController extends AbstractController
     protected function transform($data, TransformerAbstract $transformer) : array
     {
         if ($data instanceof PaginatorInterface) {
-            $adapter   = new FixedAdapter($data->total(), $data->items());
+            $adapter   = new FixedAdapter($data->getTotal(), $data->getResults());
             $paginator = new Pagerfanta($adapter);
-            $paginator->setMaxPerPage($data->limit());
-            $paginator->setCurrentPage($data->currentPage());
+            $paginator->setMaxPerPage($data->getLimit());
+            $paginator->setCurrentPage($data->getCurrentPage());
 
             $results = $paginator->getCurrentPageResults();
 

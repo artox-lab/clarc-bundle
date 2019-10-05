@@ -84,7 +84,10 @@ class ArtoxLabClarcExtension extends Extension implements PrependExtensionInterf
         $config = [
             'messenger' => [
                 'transports' => ['sync' => 'sync://'],
-                'routing'    => ['ArtoxLab\Bundle\ClarcBundle\Core\UseCases\Interfaces\SyncCommandInterface' => 'sync'],
+                'routing'    => [
+                    'ArtoxLab\Bundle\ClarcBundle\Core\UseCases\Interactors\AbstractCommand' => 'sync',
+                    'ArtoxLab\Bundle\ClarcBundle\Core\UseCases\Queries\AbstractQuery'       => 'sync',
+                ],
                 'buses'      => [
                     'command.bus' => [
                         'middleware' => ['validation'],

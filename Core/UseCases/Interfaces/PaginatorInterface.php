@@ -13,31 +13,31 @@ interface PaginatorInterface
 {
 
     /**
-     * Results
-     *
-     * @return array
-     */
-    public function items() : array;
-
-    /**
      * Number of page
      *
      * @return int
      */
-    public function currentPage() : int;
+    public function getCurrentPage() : int;
 
     /**
      * Number of results per page
      *
      * @return int
      */
-    public function limit() : int;
+    public function getLimit() : int;
 
     /**
-     * The total number of items
+     * Results
+     *
+     * @return array
+     */
+    public function getResults() : array;
+
+    /**
+     * The total number of results
      *
      * @return int
      */
-    public function total() : int;
+    public function getTotal() : int;
 
 }
