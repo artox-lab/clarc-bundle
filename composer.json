@@ -23,5 +23,9 @@
         "exclude-from-classmap": [
             "/Tests/"
         ]
+    },
+    "require-dev": {
+        "symfony/maker-bundle": "^1.13",
+        "haydenpierce/class-finder": "^0.4.0"
     }
 }
