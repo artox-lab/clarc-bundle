@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace <?= $namespace; ?>;
 
-use ArtoxLab\Bundle\ClarcBundle\Core\UseCases\Interactors\AbstractInteractor;
+use ArtoxLab\Bundle\ClarcBundle\Core\UseCases\Commands\AbstractInteractor;
 <?php if (empty($return_type_full_class_name) === false): ?>use <?= $return_type_full_class_name ?>;<?= PHP_EOL ?><?php endif;?>
 
 class <?= $class_name ?> extends AbstractInteractor

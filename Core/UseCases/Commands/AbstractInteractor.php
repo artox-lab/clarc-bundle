@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace ArtoxLab\Bundle\ClarcBundle\Core\UseCases\Interactors;
+namespace ArtoxLab\Bundle\ClarcBundle\Core\UseCases\Commands;
 
 use Symfony\Component\Messenger\MessageBusInterface;
 

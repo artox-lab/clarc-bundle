@@ -1,6 +1,6 @@
 <?php
 /**
- * Make UseCase\Queries: Find, List or Paginate
+ * Make UseCase\Commands: generates classes of command and interactor
  *
  * @author Artur Turchin <a.turchin@artox.com>
  */
@@ -9,22 +9,19 @@ declare(strict_types=1);
 
 namespace ArtoxLab\Bundle\ClarcBundle\Command;
 
+use ArtoxLab\Bundle\ClarcBundle\Core\UseCases\Commands\AbstractCommand;
 use ArtoxLab\Bundle\ClarcBundle\Core\UseCases\Commands\AbstractInteractor;
 use ArtoxLab\Bundle\ClarcBundle\Core\UseCases\Interfaces\PaginatorInterface as PaginatorInterface;
-use ArtoxLab\Bundle\ClarcBundle\Core\UseCases\Queries\AbstractQuery;
 use Exception as Exception;
-use HaydenPierce\ClassFinder\ClassFinder;
 use Symfony\Bundle\MakerBundle\ConsoleStyle;
 use Symfony\Bundle\MakerBundle\DependencyBuilder;
 use Symfony\Bundle\MakerBundle\Generator;
 use Symfony\Bundle\MakerBundle\InputConfiguration;
-use Symfony\Bundle\MakerBundle\Str;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Question\Question;
 
-class MakeUseCaseQuery extends AbstractMaker
+class MakeUseCaseCommand extends AbstractMaker
 {
 
     /**
@@ -34,7 +31,7 @@ class MakeUseCaseQuery extends AbstractMaker
      */
     public static function getCommandName(): string
     {
-        return 'make:use-case:query';
+        return 'make:use-case:command';
     }
 
     /**
@@ -50,7 +47,7 @@ class MakeUseCaseQuery extends AbstractMaker
      */
     public function configureCommand(Command $command, InputConfiguration $inputConfig) : void
     {
-        $command->setDescription('Creates new App\UseCase\Query: Find, List or Paginate');
+        $command->setDescription('Creates new App\UseCase\Command');
     }
 
     /**
@@ -62,7 +59,7 @@ class MakeUseCaseQuery extends AbstractMaker
      */
     public function configureDependencies(DependencyBuilder $dependencies) : void
     {
-        $dependencies->addClassDependency(AbstractQuery::class, 'clarc-bundle');
+        $dependencies->addClassDependency(AbstractCommand::class, 'clarc-bundle');
         $dependencies->addClassDependency(AbstractInteractor::class, 'clarc-bundle');
         $dependencies->addClassDependency(PaginatorInterface::class, 'clarc-bundle');
     }
@@ -80,64 +77,29 @@ class MakeUseCaseQuery extends AbstractMaker
      */
     public function generate(InputInterface $input, ConsoleStyle $io, Generator $generator) : void
     {
-        $question = new Question('Specify name of Query (without App\UseCase\Queries namespace)');
+        $question = new Question('Specify name of Command (without App\UseCase\Commands namespace)');
         $name     = $io->askQuestion($question);
-
-        $question = new ChoiceQuestion('Choose type of query', ['Find', 'List', 'Paginate'], 'Find');
-        $type     = $io->askQuestion($question);
-
-        $returnType = '';
-
-        if (empty($classes = $this->searchAllDTOClasses()) === false) {
-            $question   = new ChoiceQuestion('Choose type of returning DTO', $classes);
-            $returnType = $io->askQuestion($question);
-        }
 
         $question = new Question('Specify author', exec('echo "$(git config user.name) <$(git config user.email)>"'));
         $author   = $io->askQuestion($question);
 
-        $commandFullClassName    = 'App\UseCases\Queries\\' . trim($name, ' \\') . '\Command';
-        $interactorFullClassName = 'App\UseCases\Queries\\' . trim($name, ' \\') . '\Interactor';
+        $commandFullClassName    = 'App\UseCases\Commands\\' . trim($name, ' \\') . '\Command';
+        $interactorFullClassName = 'App\UseCases\Commands\\' . trim($name, ' \\') . '\Interactor';
 
         $generator->generateClass(
             $commandFullClassName,
-            $this->resolveTemplate('UseCases/Queries/' . $type . '/Command.tpl.php'),
-            [
-                'return_type_short_class_name' => Str::getShortClassName($returnType),
-                'author'                       => $author,
-            ]
+            $this->resolveTemplate('UseCases/Commands/Command.tpl.php'),
+            ['author' => $author]
         );
         $generator->generateClass(
             $interactorFullClassName,
-            $this->resolveTemplate('UseCases/Queries/' . $type . '/Interactor.tpl.php'),
-            [
-                'return_type_full_class_name'  => $returnType,
-                'return_type_short_class_name' => Str::getShortClassName($returnType),
-                'author'                       => $author,
-            ]
+            $this->resolveTemplate('UseCases/Commands/Interactor.tpl.php'),
+            ['author' => $author]
         );
         $generator->writeChanges();
 
         $this->writeSuccessMessage($io);
-        $io->text(['Next: Open your new query & interactor and add your logic.']);
-    }
-
-    /**
-     * Finding all defined DTO
-     *
-     * @return array
-     *
-     * @throws Exception
-     */
-    protected function searchAllDTOClasses() : array
-    {
-        $dto = ClassFinder::getClassesInNamespace('App\Entities\DTO', ClassFinder::RECURSIVE_MODE);
-
-        if (empty($dto) === true) {
-            return [];
-        }
-
-        return $dto;
+        $io->text(['Next: Open your new command & interactor and add your logic.']);
     }
 
 }
