@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace ArtoxLab\Bundle\ClarcBundle\Command;
+namespace ArtoxLab\Bundle\ClarcBundle\Command\Maker;
 
 use Symfony\Bundle\MakerBundle\Maker\AbstractMaker as AbstractSymfonyMaker;
 
@@ -23,7 +23,7 @@ abstract class AbstractMaker extends AbstractSymfonyMaker
      */
     protected function resolveTemplate(string $path) : string
     {
-        return __DIR__ . '/../Resources/skeleton/' . $path;
+        return __DIR__ . '/../../Resources/skeleton/' . $path;
     }
 
 }

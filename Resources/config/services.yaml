@@ -7,3 +7,8 @@ services:
     arguments: ['@command.bus']
 
   ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\CommandBus\CommandBusInterface: '@artox_lab_clarc.command_bus'
+
+  ArtoxLab\Bundle\ClarcBundle\Command\Maker\:
+    resource: '../../Command/Maker/*'
+    exclude: '../../Command/Maker/{AbstractMaker.php}'
+    tags: ['maker.command']

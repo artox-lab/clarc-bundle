@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace ArtoxLab\Bundle\ClarcBundle\Command;
+namespace ArtoxLab\Bundle\ClarcBundle\Command\Maker;
 
 use ArtoxLab\Bundle\ClarcBundle\Core\UseCases\Commands\AbstractCommand;
 use ArtoxLab\Bundle\ClarcBundle\Core\UseCases\Commands\AbstractInteractor;
