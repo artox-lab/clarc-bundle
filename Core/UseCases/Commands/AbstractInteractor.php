@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace ArtoxLab\Bundle\ClarcBundle\Core\UseCases\Commands;
 
-use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
-abstract class AbstractInteractor implements MessageBusInterface
+abstract class AbstractInteractor implements MessageHandlerInterface
 {
 
 }
