@@ -20,6 +20,7 @@ use Symfony\Bundle\MakerBundle\InputConfiguration;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Question\Question;
+use Symfony\Component\HttpFoundation\ServerBag;
 
 class MakeUseCaseCommand extends AbstractMaker
 {
@@ -47,6 +48,12 @@ class MakeUseCaseCommand extends AbstractMaker
      */
     public function configureCommand(Command $command, InputConfiguration $inputConfig) : void
     {
+        $command->addArgument(
+            'author',
+            null,
+            'Author of generated classes',
+            ($_SERVER['AUTHOR'] ?? null)
+        );
         $command->setDescription('Creates new App\UseCase\Command');
     }
 
@@ -77,11 +84,10 @@ class MakeUseCaseCommand extends AbstractMaker
      */
     public function generate(InputInterface $input, ConsoleStyle $io, Generator $generator) : void
     {
+        $author = $input->getArgument('author');
+
         $question = new Question('Specify name of Command (without App\UseCase\Commands namespace)');
         $name     = $io->askQuestion($question);
-
-        $question = new Question('Specify author', exec('echo "$(git config user.name) <$(git config user.email)>"'));
-        $author   = $io->askQuestion($question);
 
         $commandFullClassName    = 'App\UseCases\Commands\\' . trim($name, ' \\') . '\Command';
         $interactorFullClassName = 'App\UseCases\Commands\\' . trim($name, ' \\') . '\Interactor';

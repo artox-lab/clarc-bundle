@@ -50,6 +50,12 @@ class MakeUseCaseQuery extends AbstractMaker
      */
     public function configureCommand(Command $command, InputConfiguration $inputConfig) : void
     {
+        $command->addArgument(
+            'author',
+            null,
+            'Author of generated classes',
+            ($_SERVER['AUTHOR'] ?? null)
+        );
         $command->setDescription('Creates new App\UseCase\Query: Find, List or Paginate');
     }
 
@@ -80,6 +86,8 @@ class MakeUseCaseQuery extends AbstractMaker
      */
     public function generate(InputInterface $input, ConsoleStyle $io, Generator $generator) : void
     {
+        $author = $input->getArgument('author');
+
         $question = new Question('Specify name of Query (without App\UseCase\Queries namespace)');
         $name     = $io->askQuestion($question);
 
@@ -92,9 +100,6 @@ class MakeUseCaseQuery extends AbstractMaker
             $question   = new ChoiceQuestion('Choose type of returning DTO', $classes);
             $returnType = $io->askQuestion($question);
         }
-
-        $question = new Question('Specify author', exec('echo "$(git config user.name) <$(git config user.email)>"'));
-        $author   = $io->askQuestion($question);
 
         $commandFullClassName    = 'App\UseCases\Queries\\' . trim($name, ' \\') . '\Command';
         $interactorFullClassName = 'App\UseCases\Queries\\' . trim($name, ' \\') . '\Interactor';
