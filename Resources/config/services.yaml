@@ -12,3 +12,9 @@ services:
     resource: '../../Command/Maker/*'
     exclude: '../../Command/Maker/{AbstractMaker.php}'
     tags: ['maker.command']
+
+  ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\UI\API\Requests\RequestResolver:
+    arguments:
+      - '@validator'
+    tags:
+      - { name: controller.request_value_resolver, priority: 50 }
