@@ -15,7 +15,7 @@ interface RequestInterface
 {
 
     /**
-     * RequestDTOInterface constructor.
+     * RequestInterface constructor.
      *
      * @param Request $request Incoming request
      */

@@ -17,4 +17,4 @@ services:
     arguments:
       - '@validator'
     tags:
-      - { name: controller.request_value_resolver, priority: 50 }
+      - { name: controller.argument_value_resolver, priority: 50 }
