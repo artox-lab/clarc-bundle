@@ -6,6 +6,12 @@ services:
     class: \ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\CommandBus\CommandBus
     arguments: ['@command.bus']
 
+  api_exception_subscriber:
+    class: ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\UI\API\EventListeners\ExceptionSubscriber
+    arguments: []
+    tags:
+      - { name: kernel.event_subscriber }
+
   ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\CommandBus\CommandBusInterface: '@artox_lab_clarc.command_bus'
 
   ArtoxLab\Bundle\ClarcBundle\Command\Maker\:

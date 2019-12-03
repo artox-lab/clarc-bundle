@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\UI\API\Requests;
 
+use ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\UI\API\Exceptions\RequestValidationFailedException;
 use Generator as Generator;
 use ReflectionClass;
 use ReflectionException;
@@ -75,7 +76,7 @@ class RequestResolver implements ArgumentValueResolverInterface
         $errors = $this->validator->validate($dto);
 
         if (count($errors) > 0) {
-            throw new BadRequestHttpException((string) $errors);
+            throw new RequestValidationFailedException($errors);
         }
 
         yield $dto;
