@@ -90,7 +90,9 @@ class ArtoxLabClarcExtension extends Extension implements PrependExtensionInterf
                 ],
                 'buses'      => [
                     'command.bus' => [
-                        'middleware' => ['validation'],
+                        'middleware' => [
+                            'ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\CommandBus\Middleware\ValidationMiddleware',
+                        ],
                     ],
                 ],
             ],

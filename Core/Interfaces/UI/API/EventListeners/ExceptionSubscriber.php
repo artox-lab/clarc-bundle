@@ -9,9 +9,10 @@ declare(strict_types=1);
 
 namespace ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\UI\API\EventListeners;
 
-use ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\UI\API\Exceptions\RequestValidationFailedException;
+use ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Exceptions\ValidationFailedException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
@@ -29,21 +30,27 @@ class ExceptionSubscriber implements EventSubscriberInterface
     {
         $exception = $event->getException();
 
+        if (($code = $exception->getCode()) === 0) {
+            $code = Response::HTTP_BAD_GATEWAY;
+        }
+
         $data = [
             'status' => $exception->getCode(),
             'errors' => $exception->getMessage(),
             'trace'  => $exception->getTraceAsString(),
         ];
 
-        if (($exception instanceof RequestValidationFailedException) === true) {
-            $data['errors'] = $exception->getValidationErrors();
-            unset($data['trace']);
+        if (($exception instanceof ValidationFailedException) === true) {
+            $data = [
+                'status' => $exception->getCode(),
+                'errors' => $exception->getValidationErrors(),
+            ];
         }
 
         $event->setResponse(
             new JsonResponse(
                 $data,
-                $exception->getCode()
+                $code
             )
         );
     }

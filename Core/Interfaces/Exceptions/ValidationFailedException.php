@@ -1,20 +1,27 @@
 <?php
 /**
- * Request validation failed exception
+ * Some validation failed exception
  *
  * @author Artur Turchin <a.turchin@artox.com>
  */
 
 declare(strict_types=1);
 
-namespace ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\UI\API\Exceptions;
+namespace ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Exceptions;
 
 use InvalidArgumentException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 
-class RequestValidationFailedException extends InvalidArgumentException
+class ValidationFailedException extends InvalidArgumentException
 {
+    /**
+     * Basic message
+     *
+     * @var string
+     */
+    protected $basicMessage = 'Validation error';
+
     /**
      * Validation errors
      *
@@ -29,7 +36,7 @@ class RequestValidationFailedException extends InvalidArgumentException
      */
     public function __construct(ConstraintViolationListInterface $violations)
     {
-        parent::__construct('Validation error', Response::HTTP_UNPROCESSABLE_ENTITY);
+        parent::__construct($this->basicMessage, Response::HTTP_UNPROCESSABLE_ENTITY);
 
         if (count($violations) < 1) {
             return;
