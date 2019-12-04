@@ -30,7 +30,7 @@ class ExceptionSubscriber implements EventSubscriberInterface
     {
         $exception = $event->getException();
 
-        if (($code = $exception->getCode()) === 0) {
+        if (($code = $exception->getCode()) < 100) {
             $code = Response::HTTP_BAD_GATEWAY;
         }
 
