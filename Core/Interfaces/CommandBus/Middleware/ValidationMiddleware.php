@@ -11,12 +11,12 @@ namespace ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\CommandBus\Middleware;
 
 use ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Exceptions\CommandValidationFailedException;
 use Symfony\Component\Messenger\Envelope;
-use Symfony\Component\Messenger\Exception\ValidationFailedException;
+use Symfony\Component\Messenger\Middleware\MiddlewareInterface;
 use Symfony\Component\Messenger\Middleware\StackInterface;
 use Symfony\Component\Messenger\Stamp\ValidationStamp;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-class ValidationMiddleware
+class ValidationMiddleware implements MiddlewareInterface
 {
     /**
      * Validator

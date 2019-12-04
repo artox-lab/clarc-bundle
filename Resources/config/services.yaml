@@ -6,6 +6,11 @@ services:
     class: \ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\CommandBus\CommandBus
     arguments: ['@command.bus']
 
+  artox_lab_clarc.command_bus.validation:
+    class: 'ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\CommandBus\Middleware\ValidationMiddleware'
+    arguments:
+      - '@validator'
+
   api_exception_subscriber:
     class: ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\UI\API\EventListeners\ExceptionSubscriber
     arguments: []
