@@ -19,9 +19,38 @@ use League\Fractal\TransformerAbstract;
 use Pagerfanta\Adapter\FixedAdapter;
 use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class AbstractApiController extends AbstractController
 {
+
+    /**
+     * Response of creating resource
+     *
+     * @param null  $data    Data
+     * @param int   $status  Status code of response
+     * @param array $headers Headers
+     * @param array $context Serializer's context
+     *
+     * @return Response
+     */
+    public function created($data = null, int $status = 201, array $headers = [], array $context = []) : Response
+    {
+        return $this->json($data, $status, $headers, $context);
+    }
+
+    /**
+     * Response without content
+     *
+     * @param int $status Status code of response
+     *
+     * @return Response
+     */
+    public function noContent(int $status = 204) : Response
+    {
+        return $this->json(null, $status);
+    }
 
     /**
      * Transform data to API resources
