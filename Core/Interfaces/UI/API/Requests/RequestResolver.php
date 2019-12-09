@@ -9,15 +9,15 @@ declare(strict_types=1);
 
 namespace ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\UI\API\Requests;
 
-use ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\UI\API\Exceptions\RequestValidationFailedException;
+use ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Exceptions\RequestValidationFailedException;
 use Generator as Generator;
 use ReflectionClass;
 use ReflectionException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class RequestResolver implements ArgumentValueResolverInterface
 {
@@ -76,9 +76,17 @@ class RequestResolver implements ArgumentValueResolverInterface
         $class = $argument->getType();
         $dto   = new $class($request);
 
-        // Throw bad request exception in case of invalid request data.
-        $errors = $this->validator->validate($dto);
+        if ($dto instanceof AbstractRequest) {
+            $errors = $this->validator->validate(
+                $dto->getRequestParams(),
+                new Assert\Collection($dto->getRules()),
+                new Assert\GroupSequence($dto->getGroups())
+            );
+        } else {
+            $errors = $this->validator->validate($dto);
+        }
 
+        // Throw bad request exception in case of invalid request data.
         if (count($errors) > 0) {
             throw new RequestValidationFailedException($errors);
         }
