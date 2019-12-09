@@ -9,23 +9,47 @@ declare(strict_types=1);
 
 namespace ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\UI\API\Controllers;
 
-use ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\UI\API\Transformers\Serializers\NullObjectArraySerializer;
+use ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\CommandBus\CommandBusInterface;
 use ArtoxLab\Bundle\ClarcBundle\Core\UseCases\Interfaces\PaginatorInterface;
 use League\Fractal\Manager;
 use League\Fractal\Pagination\PagerfantaPaginatorAdapter;
 use League\Fractal\Resource\Collection;
 use League\Fractal\Resource\Item;
+use League\Fractal\Serializer\Serializer;
+use League\Fractal\Serializer\SerializerAbstract;
 use League\Fractal\TransformerAbstract;
 use Pagerfanta\Adapter\FixedAdapter;
 use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Messenger\HandleTrait;
-use Symfony\Component\Messenger\MessageBusInterface;
 
 class AbstractApiController extends AbstractController
 {
+    /**
+     * Command bus
+     *
+     * @var CommandBusInterface
+     */
+    protected $commandBus;
+
+    /**
+     * Fractal serializer
+     *
+     * @var SerializerAbstract
+     */
+    protected $fractalSerializer;
+
+    /**
+     * AbstractApiController constructor.
+     *
+     * @param Serializer          $fractalSerializer Fractal serializer
+     * @param CommandBusInterface $commandBus        Command bus
+     */
+    public function __construct(Serializer $fractalSerializer, CommandBusInterface $commandBus)
+    {
+        $this->fractalSerializer = $fractalSerializer;
+        $this->commandBus        = $commandBus;
+    }
 
     /**
      * Response of creating resource
@@ -94,7 +118,7 @@ class AbstractApiController extends AbstractController
         }
 
         $fractal = new Manager();
-        $fractal->setSerializer($this->getParameter('artox_lab_clarc.api.serializer'));
+        $fractal->setSerializer($this->fractalSerializer);
 
         return $fractal->createData($resource)->toArray();
     }

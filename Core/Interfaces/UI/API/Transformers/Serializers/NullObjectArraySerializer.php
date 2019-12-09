@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\UI\API\Transformers\Serializers;
 
-use League\Fractal\Serializer\ArraySerializer;
+use League\Fractal\Serializer\DataArraySerializer;
 
-class NullObjectArraySerializer extends ArraySerializer
+class NullObjectArraySerializer extends DataArraySerializer
 {
 
     /**
