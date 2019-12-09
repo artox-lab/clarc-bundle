@@ -60,7 +60,7 @@ abstract class AbstractRequest implements RequestInterface
      */
     public function getGroups() : array
     {
-        return [];
+        return ['Default'];
     }
 
 }
