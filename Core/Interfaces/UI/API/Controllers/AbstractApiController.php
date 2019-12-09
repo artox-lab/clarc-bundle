@@ -21,9 +21,29 @@ use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Messenger\HandleTrait;
+use Symfony\Component\Messenger\MessageBusInterface;
 
 class AbstractApiController extends AbstractController
 {
+    use HandleTrait;
+
+    /**
+     * Command bus
+     *
+     * @var MessageBusInterface
+     */
+    private $messageBus;
+
+    /**
+     * FavouritesController constructor.
+     *
+     * @param MessageBusInterface $commandBus Command bus
+     */
+    public function __construct(MessageBusInterface $commandBus)
+    {
+        $this->messageBus = $commandBus;
+    }
 
     /**
      * Response of creating resource
