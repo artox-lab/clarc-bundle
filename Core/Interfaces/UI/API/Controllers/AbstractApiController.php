@@ -26,24 +26,6 @@ use Symfony\Component\Messenger\MessageBusInterface;
 
 class AbstractApiController extends AbstractController
 {
-    use HandleTrait;
-
-    /**
-     * Command bus
-     *
-     * @var MessageBusInterface
-     */
-    private $messageBus;
-
-    /**
-     * FavouritesController constructor.
-     *
-     * @param MessageBusInterface $commandBus Command bus
-     */
-    public function __construct(MessageBusInterface $commandBus)
-    {
-        $this->messageBus = $commandBus;
-    }
 
     /**
      * Response of creating resource
