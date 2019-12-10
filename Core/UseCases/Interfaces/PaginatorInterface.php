@@ -40,4 +40,13 @@ interface PaginatorInterface
      */
     public function getTotal() : int;
 
+    /**
+     * Map results with callback
+     *
+     * @param callable $callback Callback
+     *
+     * @return void
+     */
+    public function map(callable $callback) : void;
+
 }

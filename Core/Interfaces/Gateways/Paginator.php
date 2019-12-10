@@ -96,4 +96,16 @@ class Paginator implements PaginatorInterface
         return $this->total;
     }
 
+    /**
+     * Map results with callback
+     *
+     * @param callable $callback Callback
+     *
+     * @return void
+     */
+    public function map(callable $callback) : void
+    {
+        $this->results = array_map($callback, $this->results);
+    }
+
 }
