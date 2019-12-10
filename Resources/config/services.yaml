@@ -12,7 +12,7 @@ services:
 
   api_exception_subscriber:
     class: ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\UI\API\EventListeners\ExceptionSubscriber
-    arguments: []
+    arguments: ['@translator']
     tags:
       - { name: kernel.event_subscriber }
 

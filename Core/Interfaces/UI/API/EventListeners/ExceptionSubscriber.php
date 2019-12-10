@@ -18,9 +18,26 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Messenger\Exception\HandlerFailedException;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ExceptionSubscriber implements EventSubscriberInterface
 {
+    /**
+     * Translator
+     *
+     * @var TranslatorInterface
+     */
+    protected $translator;
+
+    /**
+     * ExceptionSubscriber constructor.
+     *
+     * @param TranslatorInterface $traslator Translator
+     */
+    public function __construct(TranslatorInterface $traslator)
+    {
+        $this->translator = $traslator;
+    }
 
     /**
      * Returns an array of event names this subscriber wants to listen to.
@@ -83,12 +100,14 @@ class ExceptionSubscriber implements EventSubscriberInterface
             ];
 
             foreach ($exception->getNestedExceptions() as $nestedException) {
+                $message = $this->translator->trans($nestedException->getMessage(), [], 'exceptions');
+
                 if ($nestedException instanceof DomainException) {
-                    $data['errors']['domain'][] = $nestedException->getMessage();
+                    $data['errors']['domain'][] = $message;
                     continue;
                 }
 
-                $data['errors']['unexpected'][] = $nestedException->getMessage();
+                $data['errors']['unexpected'][] = $message;
             }
         }
 
@@ -102,7 +121,7 @@ class ExceptionSubscriber implements EventSubscriberInterface
         if (empty($data) === true) {
             $data = [
                 'status' => $exception->getCode(),
-                'errors' => ['unexpected' => [$exception->getMessage()]],
+                'errors' => ['unexpected' => [$this->translator->trans($exception->getMessage(), [], 'exceptions')]],
                 'trace'  => $exception->getTrace(),
             ];
         }
