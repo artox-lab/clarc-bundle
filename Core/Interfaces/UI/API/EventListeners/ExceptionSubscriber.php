@@ -10,50 +10,17 @@ declare(strict_types=1);
 namespace ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\UI\API\EventListeners;
 
 use ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Exceptions\ValidationFailedException;
+use DomainException;
+use Exception;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
+use Symfony\Component\Messenger\Exception\HandlerFailedException;
 
 class ExceptionSubscriber implements EventSubscriberInterface
 {
-
-    /**
-     * Handle exception in API
-     *
-     * @param ExceptionEvent $event Exception event
-     *
-     * @return void
-     */
-    public function onKernelException(ExceptionEvent $event)
-    {
-        $exception = $event->getException();
-
-        if (($code = $exception->getCode()) < 100) {
-            $code = Response::HTTP_BAD_GATEWAY;
-        }
-
-        $data = [
-            'status' => $exception->getCode(),
-            'errors' => $exception->getMessage(),
-            'trace'  => $exception->getTraceAsString(),
-        ];
-
-        if (($exception instanceof ValidationFailedException) === true) {
-            $data = [
-                'status' => $exception->getCode(),
-                'errors' => $exception->getValidationErrors(),
-            ];
-        }
-
-        $event->setResponse(
-            new JsonResponse(
-                $data,
-                $code
-            )
-        );
-    }
 
     /**
      * Returns an array of event names this subscriber wants to listen to.
@@ -76,6 +43,71 @@ class ExceptionSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents() : array
     {
         return [KernelEvents::EXCEPTION => 'onKernelException'];
+    }
+
+    /**
+     * Handle exception in API
+     *
+     * @param ExceptionEvent $event Exception event
+     *
+     * @return void
+     */
+    public function onKernelException(ExceptionEvent $event)
+    {
+        $exception = $event->getException();
+
+        $response = $this->makeResponse($exception);
+
+        $event->setResponse($response);
+    }
+
+    /**
+     * Convert exception to response
+     *
+     * @param Exception $exception Exception
+     *
+     * @return Response
+     */
+    protected function makeResponse(Exception $exception) : Response
+    {
+        if (($code = $exception->getCode()) < 100) {
+            $code = Response::HTTP_INTERNAL_SERVER_ERROR;
+        }
+
+        $data = [];
+
+        if ($exception instanceof HandlerFailedException && empty($exception->getNestedExceptions()) === false) {
+            $data = [
+                'status' => $exception->getCode(),
+                'errors' => [],
+            ];
+
+            foreach ($exception->getNestedExceptions() as $nestedException) {
+                if ($nestedException instanceof DomainException) {
+                    $data['errors']['domain'][] = $nestedException->getMessage();
+                    continue;
+                }
+
+                $data['errors']['unexpected'][] = $nestedException->getMessage();
+            }
+        }
+
+        if ($exception instanceof ValidationFailedException) {
+            $data = [
+                'status' => $exception->getCode(),
+                'errors' => $exception->getValidationErrors(),
+            ];
+        }
+
+        if (empty($data) === true) {
+            $data = [
+                'status' => $exception->getCode(),
+                'errors' => ['unexpected' => [$exception->getMessage()]],
+                'trace'  => $exception->getTrace(),
+            ];
+        }
+
+        return new JsonResponse($data, $code);
     }
 
 }
