@@ -91,6 +91,7 @@ class AbstractApiController extends AbstractController
         if ($data instanceof PaginatorInterface) {
             $adapter   = new FixedAdapter($data->getTotal(), $data->getResults());
             $paginator = new Pagerfanta($adapter);
+            $paginator->setAllowOutOfRangePages(true);
             $paginator->setMaxPerPage($data->getLimit());
             $paginator->setCurrentPage($data->getCurrentPage());
 
