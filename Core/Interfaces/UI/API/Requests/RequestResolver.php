@@ -53,6 +53,10 @@ class RequestResolver implements ArgumentValueResolverInterface
             return false;
         }
 
+        if (class_exists($argument->getType()) === false) {
+            return false;
+        }
+
         $reflection = new ReflectionClass($argument->getType());
 
         if ($reflection->implementsInterface(RequestInterface::class) === true) {
