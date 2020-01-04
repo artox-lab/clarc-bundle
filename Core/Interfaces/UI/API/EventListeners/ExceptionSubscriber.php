@@ -16,6 +16,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Messenger\Exception\HandlerFailedException;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -115,6 +116,15 @@ class ExceptionSubscriber implements EventSubscriberInterface
             $data = [
                 'status' => $exception->getCode(),
                 'errors' => $exception->getValidationErrors(),
+            ];
+        }
+
+        if ($exception instanceof HttpException) {
+            $code = $exception->getStatusCode();
+
+            $data = [
+                'status' => $exception->getStatusCode(),
+                'errors' => ['http' => [$exception->getMessage()]],
             ];
         }
 
