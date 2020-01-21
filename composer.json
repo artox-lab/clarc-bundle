@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "php": ">=7.1",
+        "php": ">=7.3",
         "pagerfanta/pagerfanta": "^2.1",
         "league/fractal": "^0.18.0",
         "symfony/framework-bundle": "^4.3",
