@@ -1,0 +1,3 @@
+artox_lab_health_check_ping_pong:
+    path: /ping
+    controller: ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\UI\API\Controllers\PingPongController::ping
