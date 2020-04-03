@@ -11,7 +11,6 @@ namespace ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\UI\API\EventListeners;
 
 use ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Exceptions\ValidationFailedException;
 use DomainException;
-use Exception;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,6 +19,7 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Messenger\Exception\HandlerFailedException;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Throwable;
 
 class ExceptionSubscriber implements EventSubscriberInterface
 {
@@ -70,9 +70,9 @@ class ExceptionSubscriber implements EventSubscriberInterface
      *
      * @return void
      */
-    public function onKernelException(ExceptionEvent $event)
+    public function onKernelException(ExceptionEvent $event): void
     {
-        $exception = $event->getException();
+        $exception = $event->getThrowable();
 
         $response = $this->makeResponse($exception);
 
@@ -82,11 +82,11 @@ class ExceptionSubscriber implements EventSubscriberInterface
     /**
      * Convert exception to response
      *
-     * @param Exception $exception Exception
+     * @param Throwable $exception Exception
      *
      * @return Response
      */
-    protected function makeResponse(Exception $exception) : Response
+    protected function makeResponse(Throwable $exception) : Response
     {
         if (($code = $exception->getCode()) < 100) {
             $code = Response::HTTP_INTERNAL_SERVER_ERROR;
