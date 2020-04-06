@@ -29,3 +29,8 @@ services:
 
   League\Fractal\Serializer\Serializer:
     class: \ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\UI\API\Transformers\Serializers\NullObjectArraySerializer
+
+  ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\UI\API\Controllers\:
+    resource: '../../Core/Interfaces/UI/API/Controllers/'
+    tags: ['controller.service_arguments']
+    calls: [['setContainer', ['@service_container']]]
