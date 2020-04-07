@@ -39,38 +39,6 @@ class DateTimeValidator extends SymfonyDateTimeValidator
         if (false === $value instanceof \DateTime) {
             throw new UnexpectedValueException($value, 'DateTime');
         }
-
-        \DateTime::createFromFormat($constraint->format, $value->format($constraint->format));
-
-        $errors = \DateTime::getLastErrors();
-
-        if (0 < $errors['error_count']) {
-            $this->context->buildViolation($constraint->message)
-                ->setParameter('{{ value }}', $this->formatValue($value))
-                ->setCode(DateTime::INVALID_FORMAT_ERROR)
-                ->addViolation();
-
-            return;
-        }
-
-        foreach ($errors['warnings'] as $warning) {
-            if ('The parsed date was invalid' === $warning) {
-                $this->context->buildViolation($constraint->message)
-                    ->setParameter('{{ value }}', $this->formatValue($value))
-                    ->setCode(DateTime::INVALID_DATE_ERROR)
-                    ->addViolation();
-            } else if ('The parsed time was invalid' === $warning) {
-                $this->context->buildViolation($constraint->message)
-                    ->setParameter('{{ value }}', $this->formatValue($value))
-                    ->setCode(DateTime::INVALID_TIME_ERROR)
-                    ->addViolation();
-            } else {
-                $this->context->buildViolation($constraint->message)
-                    ->setParameter('{{ value }}', $this->formatValue($value))
-                    ->setCode(DateTime::INVALID_FORMAT_ERROR)
-                    ->addViolation();
-            }
-        }
     }
 
 }
