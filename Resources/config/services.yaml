@@ -1,6 +1,6 @@
 services:
   artox_lab_clarc.command_bus:
-    class: \ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\CommandBus\CommandBus
+    class: ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\CommandBus\CommandBus
     arguments: ['@command.bus']
 
   artox_lab_clarc.command_bus.validation:
@@ -9,6 +9,11 @@ services:
       - '@validator'
 
   ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\CommandBus\CommandBusInterface: '@artox_lab_clarc.command_bus'
+
+  artox_lab_clarc.messenger.command.bus: ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Messenger\Bus\CommandBus
+  artox_lab_clarc.messenger.query.bus: ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Messenger\Bus\QueryBus
+  artox_lab_clarc.messenger.event.bus: ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Messenger\Bus\EventBus
+  artox_lab_clarc.messenger.middleware.validation: ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Messenger\Middleware\ValidationMiddleware
 
   api_exception_subscriber:
     class: ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\UI\API\EventListeners\ExceptionSubscriber
@@ -28,7 +33,7 @@ services:
       - { name: controller.argument_value_resolver, priority: 50 }
 
   League\Fractal\Serializer\Serializer:
-    class: \ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\UI\API\Transformers\Serializers\NullObjectArraySerializer
+    class: ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\UI\API\Transformers\Serializers\NullObjectArraySerializer
 
   ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\UI\API\Controllers\:
     resource: '../../Core/Interfaces/UI/API/Controllers/'
