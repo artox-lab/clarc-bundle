@@ -10,8 +10,8 @@ declare(strict_types=1);
 namespace ArtoxLab\Bundle\ClarcBundle\DependencyInjection;
 
 use ArtoxLab\Bundle\ClarcBundle\ArtoxLabClarcBundle;
-use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition as ArrayNodeDefinition;
-use Symfony\Component\Config\Definition\Builder\NodeDefinition as NodeDefinition;
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
+use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
