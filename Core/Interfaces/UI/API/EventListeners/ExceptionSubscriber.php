@@ -31,13 +31,22 @@ class ExceptionSubscriber implements EventSubscriberInterface
     protected $translator;
 
     /**
+     * Application environment
+     *
+     * @var string
+     */
+    private $environment;
+
+    /**
      * ExceptionSubscriber constructor.
      *
-     * @param TranslatorInterface $traslator Translator
+     * @param string              $environment Application environment
+     * @param TranslatorInterface $traslator   Translator
      */
-    public function __construct(TranslatorInterface $traslator)
+    public function __construct(string $environment, TranslatorInterface $traslator)
     {
-        $this->translator = $traslator;
+        $this->translator  = $traslator;
+        $this->environment = $environment;
     }
 
     /**
@@ -74,8 +83,11 @@ class ExceptionSubscriber implements EventSubscriberInterface
     {
         $exception = $event->getThrowable();
 
-        $response = $this->makeResponse($exception);
+        if (true === in_array('text/html', $event->getRequest()->getAcceptableContentTypes())) {
+            return;
+        }
 
+        $response = $this->makeResponse($exception);
         $event->setResponse($response);
     }
 
@@ -108,7 +120,9 @@ class ExceptionSubscriber implements EventSubscriberInterface
                     continue;
                 }
 
-                $data['errors']['unexpected'][] = $message;
+                if ('dev' === $this->environment) {
+                    $data['errors']['unexpected'][] = $message;
+                }
             }
         }
 
@@ -128,12 +142,35 @@ class ExceptionSubscriber implements EventSubscriberInterface
             ];
         }
 
-        if (empty($data) === true) {
+        if ($exception instanceof DomainException) {
+            $code = $exception->getCode();
+
+            $data = [
+                'status' => $exception->getCode(),
+                'errors' => ['domain' => [$exception->getMessage()]],
+            ];
+        }
+
+        if ('dev' === $this->environment && empty($data) === true) {
             $data = [
                 'status' => $exception->getCode(),
                 'errors' => ['unexpected' => [$this->translator->trans($exception->getMessage(), [], 'exceptions')]],
-                'trace'  => $exception->getTrace(),
             ];
+        }
+
+        if ('dev' !== $this->environment && empty($data) === true) {
+            $data = [
+                'status' => $exception->getCode(),
+                'errors' => ['unexpected' => [Response::$statusTexts[500]]],
+            ];
+        }
+
+        if ('dev' === $this->environment) {
+            $data['trace'] = $exception->getTrace();
+        }
+
+        if (0 === $code) {
+            $code = Response::HTTP_INTERNAL_SERVER_ERROR;
         }
 
         return new JsonResponse($data, $code);
