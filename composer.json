@@ -18,7 +18,6 @@
         "symfony/validator": "^5.0",
         "doctrine/annotations": "^1.8",
         "symfony/translation": "^5.0",
-        "symfony-bundles/json-request-bundle": "^3.0",
         "liip/monitor-bundle": "^2.12"
     },
     "autoload": {
