@@ -92,6 +92,12 @@ class ArtoxLabClarcExtension extends Extension implements PrependExtensionInterf
                     'command.bus' => [
                         'middleware' => ['artox_lab_clarc.command_bus.validation'],
                     ],
+                    'event.bus'   => [
+                        'middleware' => ['artox_lab_clarc.command_bus.validation'],
+                    ],
+                    'query.bus'   => [
+                        'middleware' => ['artox_lab_clarc.command_bus.validation'],
+                    ],
                 ],
             ],
         ];

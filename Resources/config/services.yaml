@@ -1,18 +1,36 @@
 services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
   artox_lab_clarc.command_bus:
-    class: \ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\CommandBus\CommandBus
-    arguments: ['@command.bus']
+    class: ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\CommandBus\CommandBus
 
   artox_lab_clarc.command_bus.validation:
-    class: 'ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\CommandBus\Middleware\ValidationMiddleware'
-    arguments:
-      - '@validator'
+    class: ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\CommandBus\Middleware\ValidationMiddleware
 
   ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\CommandBus\CommandBusInterface: '@artox_lab_clarc.command_bus'
 
+  artox_lab_clarc.messenger.command.bus:
+    class: ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Messenger\Bus\CommandBus
+
+  artox_lab_clarc.messenger.query.bus:
+    class: ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Messenger\Bus\QueryBus
+
+  artox_lab_clarc.messenger.event.bus:
+    class: ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Messenger\Bus\EventBus
+
+  artox_lab_clarc.messenger.middleware.validation:
+    class: ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Messenger\Middleware\ValidationMiddleware
+
+  ArtoxLab\Bundle\ClarcBundle\Core\Entity\Bus\CommandBus: '@artox_lab_clarc.messenger.command.bus'
+  ArtoxLab\Bundle\ClarcBundle\Core\Entity\Bus\QueryBus: '@artox_lab_clarc.messenger.query.bus'
+  ArtoxLab\Bundle\ClarcBundle\Core\Entity\Bus\EventBus: '@artox_lab_clarc.messenger.event.bus'
+
   api_exception_subscriber:
     class: ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\UI\API\EventListeners\ExceptionSubscriber
-    arguments: ['@translator']
+    arguments:
+        $environment: '%kernel.environment%'
     tags:
       - { name: kernel.event_subscriber }
 
@@ -22,10 +40,13 @@ services:
     tags: ['maker.command']
 
   ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\UI\API\Requests\RequestResolver:
-    arguments:
-      - '@validator'
     tags:
       - { name: controller.argument_value_resolver, priority: 50 }
 
   League\Fractal\Serializer\Serializer:
-    class: \ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\UI\API\Transformers\Serializers\NullObjectArraySerializer
+    class: ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\UI\API\Transformers\Serializers\NullObjectArraySerializer
+
+  ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\UI\API\Controllers\:
+    resource: '../../Core/Interfaces/UI/API/Controllers/'
+    tags: ['controller.service_arguments']
+    calls: [['setContainer', ['@service_container']]]
