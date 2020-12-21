@@ -18,7 +18,8 @@
         "symfony/validator": "^4.3",
         "doctrine/annotations": "^1.8",
         "symfony/translation": "^4.3",
-        "liip/monitor-bundle": "^2.12"
+        "liip/monitor-bundle": "^2.12",
+        "symfony-bundles/json-request-bundle": "3.0.0"
     },
     "autoload": {
         "psr-4": {
@@ -29,7 +30,14 @@
         ]
     },
     "require-dev": {
+        "roave/security-advisories": "dev-master",
         "symfony/maker-bundle": "^1.13",
         "haydenpierce/class-finder": "^0.4.0"
-    }
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/artox-lab/json-request-bundle"
+        }
+    ]
 }
