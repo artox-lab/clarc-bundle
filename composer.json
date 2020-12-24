@@ -11,7 +11,6 @@
     ],
     "require": {
         "php": ">=7.3",
-        "symfony-bundles/json-request-bundle": "^3.0.0",
         "pagerfanta/pagerfanta": "^2.1",
         "league/fractal": "^0.18.0",
         "symfony/framework-bundle": "^5.0",
@@ -19,7 +18,8 @@
         "symfony/validator": "^5.0",
         "doctrine/annotations": "^1.8",
         "symfony/translation": "^5.0",
-        "liip/monitor-bundle": "^2.12"
+        "liip/monitor-bundle": "^2.12",
+        "symfony-bundles/json-request-bundle": "^3.1"
     },
     "autoload": {
         "psr-4": {
@@ -33,11 +33,5 @@
         "roave/security-advisories": "dev-master",
         "symfony/maker-bundle": "^1.13",
         "haydenpierce/class-finder": "^0.4.0"
-    },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/artox-lab/json-request-bundle"
-        }
-    ]
+    }
 }
