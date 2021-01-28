@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Command bus interface
  *
@@ -7,10 +8,9 @@
 
 declare(strict_types=1);
 
-namespace ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\CommandBus;
+namespace ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Bus\CommandBus;
 
 use ArtoxLab\Bundle\ClarcBundle\Core\UseCases\Commands\AbstractCommand;
-use ArtoxLab\Bundle\ClarcBundle\Core\UseCases\Queries\AbstractQuery;
 
 interface CommandBusInterface
 {
@@ -18,10 +18,10 @@ interface CommandBusInterface
     /**
      * Executing command
      *
-     * @param AbstractCommand|AbstractQuery $command Command
+     * @param AbstractCommand $command Command
      *
      * @return mixed The handler returned value
      */
-    public function execute($command);
+    public function execute(AbstractCommand $command);
 
 }

@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\UI\API\Requests;
 
 use ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Exceptions\RequestValidationFailedException;
-use Generator as Generator;
+use Generator;
 use ReflectionClass;
 use ReflectionException;
 use Symfony\Component\HttpFoundation\Request;
