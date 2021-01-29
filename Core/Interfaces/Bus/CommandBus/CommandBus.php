@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Command bus based on symfony/messenger
  *
@@ -7,10 +8,9 @@
 
 declare(strict_types=1);
 
-namespace ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\CommandBus;
+namespace ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Bus\CommandBus;
 
 use ArtoxLab\Bundle\ClarcBundle\Core\UseCases\Commands\AbstractCommand;
-use ArtoxLab\Bundle\ClarcBundle\Core\UseCases\Queries\AbstractQuery;
 use Symfony\Component\Messenger\HandleTrait;
 use Symfony\Component\Messenger\MessageBusInterface;
 
@@ -21,21 +21,21 @@ class CommandBus implements CommandBusInterface
     /**
      * CommandBus constructor.
      *
-     * @param MessageBusInterface $messageBus Message bus
+     * @param MessageBusInterface $commandBus Command bus
      */
-    public function __construct(MessageBusInterface $messageBus)
+    public function __construct(MessageBusInterface $commandBus)
     {
-        $this->messageBus = $messageBus;
+        $this->messageBus = $commandBus;
     }
 
     /**
      * Executing command
      *
-     * @param AbstractCommand|AbstractQuery $command Command
+     * @param AbstractCommand $command Command
      *
      * @return mixed The handler returned value
      */
-    public function execute($command)
+    public function execute(AbstractCommand $command)
     {
         return $this->handle($command);
     }
