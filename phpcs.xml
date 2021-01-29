@@ -50,7 +50,10 @@
     <rule ref="Squiz.Commenting.EmptyCatchComment" />
     <rule ref="Squiz.Commenting.InlineComment" />
     <rule ref="Squiz.Commenting.PostStatementComment" />
-    <!--<rule ref="Squiz.Commenting.VariableComment" />-->
+    <rule ref="Squiz.Commenting.VariableComment" />
+    <rule ref="Squiz.Commenting.VariableComment.TagNotAllowed">
+        <severity>0</severity>
+    </rule>
     <rule ref="Squiz.Formatting.OperatorBracket" />
     <rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing">
         <properties>

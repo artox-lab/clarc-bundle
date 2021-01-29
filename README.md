@@ -39,3 +39,17 @@ return [
     ArtoxLab\Bundle\ClarcBundle\ArtoxLabClarcBundle::class => ['all' => true],
 ];
 ```
+
+### Step 3: Configuration
+
+Configure bundle
+
+```yaml
+# config/packages/artox_lab_clarc.yaml
+
+artox_lab_clarc:
+    api:
+        serializer:
+            class: \ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\UI\API\Transformers\Serializers\NullObjectArraySerializer
+
+
