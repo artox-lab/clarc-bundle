@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Command validation middleware
  *
@@ -8,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Bus\Middleware;
+namespace ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Messenger\Middleware;
 
 use ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Exceptions\CommandValidationFailedException;
 use Symfony\Component\Messenger\Envelope;
@@ -49,7 +48,7 @@ class ValidationMiddleware implements MiddlewareInterface
         $message = $envelope->getMessage();
         $groups  = null;
 
-        if (null !== ($validationStamp = $envelope->last(ValidationStamp::class))) {
+        if ($validationStamp = ($envelope->last(ValidationStamp::class) === true)) {
             $groups = $validationStamp->getGroups();
         }
 

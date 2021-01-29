@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Configuration of bundle
  *
@@ -38,8 +37,7 @@ class Configuration implements ConfigurationInterface
                             ->end()
                         ->end()
                     ->end()
-                ->end()
-            ->end();
+                ->end();
 
         return $treeBuilder;
     }
@@ -47,17 +45,16 @@ class Configuration implements ConfigurationInterface
     /**
      * Getting root node of configuration with symfony 3.4 compatibility
      *
-     * @param TreeBuilder $treeBuilder TreeBuilder
+     * @param TreeBuilder $treeBuilder
      *
      * @return ArrayNodeDefinition|NodeDefinition
      */
     protected function getRootNode(TreeBuilder $treeBuilder)
     {
-        if (true === method_exists($treeBuilder, 'getRootNode')) {
+        if (method_exists($treeBuilder, 'getRootNode')) {
             return $treeBuilder->getRootNode();
         }
 
         return $treeBuilder->root(ArtoxLabClarcBundle::CONFIG_BUNDLE_NAMESPACE);
     }
-
 }

@@ -10,9 +10,9 @@ declare(strict_types=1);
 namespace ArtoxLab\Bundle\ClarcBundle\Command\Maker;
 
 use ArtoxLab\Bundle\ClarcBundle\Core\UseCases\Commands\AbstractInteractor;
-use ArtoxLab\Bundle\ClarcBundle\Core\UseCases\Interfaces\PaginatorInterface;
+use ArtoxLab\Bundle\ClarcBundle\Core\UseCases\Interfaces\PaginatorInterface as PaginatorInterface;
 use ArtoxLab\Bundle\ClarcBundle\Core\UseCases\Queries\AbstractQuery;
-use Exception;
+use Exception as Exception;
 use HaydenPierce\ClassFinder\ClassFinder;
 use Symfony\Bundle\MakerBundle\ConsoleStyle;
 use Symfony\Bundle\MakerBundle\DependencyBuilder;
@@ -48,7 +48,7 @@ class MakeUseCaseQuery extends AbstractMaker
      *
      * @return void
      */
-    public function configureCommand(Command $command, InputConfiguration $inputConfig): void
+    public function configureCommand(Command $command, InputConfiguration $inputConfig) : void
     {
         $command->addArgument(
             'author',
@@ -66,7 +66,7 @@ class MakeUseCaseQuery extends AbstractMaker
      *
      * @return void
      */
-    public function configureDependencies(DependencyBuilder $dependencies): void
+    public function configureDependencies(DependencyBuilder $dependencies) : void
     {
         $dependencies->addClassDependency(AbstractQuery::class, 'clarc-bundle');
         $dependencies->addClassDependency(AbstractInteractor::class, 'clarc-bundle');
@@ -80,11 +80,11 @@ class MakeUseCaseQuery extends AbstractMaker
      * @param ConsoleStyle   $io        Output interface
      * @param Generator      $generator Class generator
      *
-     * @throws Exception
-     *
      * @return void
+     *
+     * @throws Exception
      */
-    public function generate(InputInterface $input, ConsoleStyle $io, Generator $generator): void
+    public function generate(InputInterface $input, ConsoleStyle $io, Generator $generator) : void
     {
         $author = $input->getArgument('author');
 
@@ -130,11 +130,11 @@ class MakeUseCaseQuery extends AbstractMaker
     /**
      * Finding all defined DTO
      *
-     * @throws Exception
-     *
      * @return array
+     *
+     * @throws Exception
      */
-    protected function searchAllDTOClasses(): array
+    protected function searchAllDTOClasses() : array
     {
         $dto = ClassFinder::getClassesInNamespace('App\Entities\DTO', ClassFinder::RECURSIVE_MODE);
 

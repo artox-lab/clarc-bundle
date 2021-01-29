@@ -9,8 +9,7 @@ declare(strict_types=1);
 
 namespace ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\UI\API\Controllers;
 
-use ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Bus\CommandBus\CommandBusInterface;
-use ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Bus\QueryBus\QueryBusInterface;
+use ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\CommandBus\CommandBusInterface;
 use ArtoxLab\Bundle\ClarcBundle\Core\UseCases\Interfaces\PaginatorInterface;
 use League\Fractal\Manager;
 use League\Fractal\Pagination\PagerfantaPaginatorAdapter;
@@ -26,6 +25,12 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AbstractApiController extends AbstractController
 {
+    /**
+     * Command bus
+     *
+     * @var CommandBusInterface
+     */
+    protected $commandBus;
 
     /**
      * Fractal serializer
@@ -35,34 +40,15 @@ class AbstractApiController extends AbstractController
     protected $fractalSerializer;
 
     /**
-     * Command bus
-     *
-     * @var CommandBusInterface
-     */
-    protected $commandBus;
-
-    /**
-     * Query bus
-     *
-     * @var QueryBusInterface
-     */
-    protected $queryBus;
-
-    /**
      * AbstractApiController constructor.
      *
      * @param Serializer          $fractalSerializer Fractal serializer
      * @param CommandBusInterface $commandBus        Command bus
-     * @param QueryBusInterface   $queryBus          Query bus
      */
-    public function __construct(
-        Serializer $fractalSerializer,
-        CommandBusInterface $commandBus,
-        QueryBusInterface $queryBus
-    ) {
+    public function __construct(Serializer $fractalSerializer, CommandBusInterface $commandBus)
+    {
         $this->fractalSerializer = $fractalSerializer;
         $this->commandBus        = $commandBus;
-        $this->queryBus          = $queryBus;
     }
 
     /**

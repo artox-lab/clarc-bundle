@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Extension of an ArtoxLabClarcExtension
  *
@@ -10,9 +9,7 @@ declare(strict_types=1);
 
 namespace ArtoxLab\Bundle\ClarcBundle\DependencyInjection;
 
-use ArtoxLab\Bundle\ClarcBundle\Core\UseCases\Commands\AbstractCommand;
-use ArtoxLab\Bundle\ClarcBundle\Core\UseCases\Queries\AbstractQuery;
-use Exception;
+use Exception as Exception;
 use InvalidArgumentException;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -36,54 +33,15 @@ class ArtoxLabClarcExtension extends Extension implements PrependExtensionInterf
     }
 
     /**
-     * Prepend configuration of symfony/messenger
-     *
-     * @param ContainerBuilder $container Container builder
-     *
-     * @return void
-     */
-    private function prependFrameworkMessenger(ContainerBuilder $container): void
-    {
-        $config = [
-            'messenger' => [
-                'default_bus' => 'command.bus',
-                'buses'       => [
-                    'command.bus' => [
-                        'middleware' => ['artox_lab_clarc.bus.validation'],
-                    ],
-                    'query.bus'   => [
-                        'middleware' => ['artox_lab_clarc.bus.validation'],
-                    ],
-                    'event.bus'   => [
-                        'default_middleware' => 'allow_no_handlers',
-                        'middleware'         => ['artox_lab_clarc.bus.validation'],
-                    ],
-                    'message.bus' => [
-                        'default_middleware' => 'allow_no_handlers',
-                        'middleware'         => ['artox_lab_clarc.bus.validation'],
-                    ],
-                ],
-                'transports'  => ['sync' => 'sync://'],
-                'routing'     => [
-                    AbstractCommand::class => 'sync',
-                    AbstractQuery::class   => 'sync',
-                ],
-            ],
-        ];
-
-        $container->prependExtensionConfig('framework', $config);
-    }
-
-    /**
      * Loads a specific configuration.
      *
      * @param array            $configs   Configs
      * @param ContainerBuilder $container Container Builder
      *
+     * @return void
+     *
      * @throws InvalidArgumentException When provided tag is not defined in this extension
      * @throws Exception
-     *
-     * @return void
      */
     public function load(array $configs, ContainerBuilder $container)
     {
@@ -107,11 +65,44 @@ class ArtoxLabClarcExtension extends Extension implements PrependExtensionInterf
      *
      * @return void
      */
-    private function loadApi(array $config, ContainerBuilder $container): void
+    protected function loadApi(array $config, ContainerBuilder $container) : void
     {
-        if (false === empty($config['serializer']['class'])) {
+        if (empty($config['serializer']['class']) === false) {
             $container->setParameter('artox_lab_clarc.api.serializer.class', $config['serializer']['class']);
         }
+    }
+
+    /**
+     * Prepend configuration of symfony/messenger
+     *
+     * @param ContainerBuilder $container Container builder
+     *
+     * @return void
+     */
+    protected function prependFrameworkMessenger(ContainerBuilder $container) : void
+    {
+        $config = [
+            'messenger' => [
+                'transports' => ['sync' => 'sync://'],
+                'routing'    => [
+                    'ArtoxLab\Bundle\ClarcBundle\Core\UseCases\Commands\AbstractCommand' => 'sync',
+                    'ArtoxLab\Bundle\ClarcBundle\Core\UseCases\Queries\AbstractQuery'    => 'sync',
+                ],
+                'buses'      => [
+                    'command.bus' => [
+                        'middleware' => ['artox_lab_clarc.command_bus.validation'],
+                    ],
+                    'event.bus'   => [
+                        'middleware' => ['artox_lab_clarc.command_bus.validation'],
+                    ],
+                    'query.bus'   => [
+                        'middleware' => ['artox_lab_clarc.command_bus.validation'],
+                    ],
+                ],
+            ],
+        ];
+
+        $container->prependExtensionConfig('framework', $config);
     }
 
 }

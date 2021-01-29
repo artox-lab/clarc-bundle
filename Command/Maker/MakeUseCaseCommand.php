@@ -11,8 +11,8 @@ namespace ArtoxLab\Bundle\ClarcBundle\Command\Maker;
 
 use ArtoxLab\Bundle\ClarcBundle\Core\UseCases\Commands\AbstractCommand;
 use ArtoxLab\Bundle\ClarcBundle\Core\UseCases\Commands\AbstractInteractor;
-use ArtoxLab\Bundle\ClarcBundle\Core\UseCases\Interfaces\PaginatorInterface;
-use Exception;
+use ArtoxLab\Bundle\ClarcBundle\Core\UseCases\Interfaces\PaginatorInterface as PaginatorInterface;
+use Exception as Exception;
 use Symfony\Bundle\MakerBundle\ConsoleStyle;
 use Symfony\Bundle\MakerBundle\DependencyBuilder;
 use Symfony\Bundle\MakerBundle\Generator;
@@ -20,6 +20,7 @@ use Symfony\Bundle\MakerBundle\InputConfiguration;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Question\Question;
+use Symfony\Component\HttpFoundation\ServerBag;
 
 class MakeUseCaseCommand extends AbstractMaker
 {
@@ -45,7 +46,7 @@ class MakeUseCaseCommand extends AbstractMaker
      *
      * @return void
      */
-    public function configureCommand(Command $command, InputConfiguration $inputConfig): void
+    public function configureCommand(Command $command, InputConfiguration $inputConfig) : void
     {
         $command->addArgument(
             'author',
@@ -63,7 +64,7 @@ class MakeUseCaseCommand extends AbstractMaker
      *
      * @return void
      */
-    public function configureDependencies(DependencyBuilder $dependencies): void
+    public function configureDependencies(DependencyBuilder $dependencies) : void
     {
         $dependencies->addClassDependency(AbstractCommand::class, 'clarc-bundle');
         $dependencies->addClassDependency(AbstractInteractor::class, 'clarc-bundle');
@@ -77,11 +78,11 @@ class MakeUseCaseCommand extends AbstractMaker
      * @param ConsoleStyle   $io        Output interface
      * @param Generator      $generator Class generator
      *
-     * @throws Exception
-     *
      * @return void
+     *
+     * @throws Exception
      */
-    public function generate(InputInterface $input, ConsoleStyle $io, Generator $generator): void
+    public function generate(InputInterface $input, ConsoleStyle $io, Generator $generator) : void
     {
         $author = $input->getArgument('author');
 

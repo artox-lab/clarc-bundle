@@ -15,14 +15,14 @@ class Paginator implements PaginatorInterface
     /**
      * Number of page
      *
-     * @var integer
+     * @var int
      */
     protected $page;
 
     /**
      * Number of results per page
      *
-     * @var integer
+     * @var int
      */
     protected $limit;
 
@@ -36,7 +36,7 @@ class Paginator implements PaginatorInterface
     /**
      * The total number of results
      *
-     * @var integer
+     * @var int
      */
     protected $total;
 
