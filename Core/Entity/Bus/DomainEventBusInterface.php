@@ -14,10 +14,10 @@ interface DomainEventBusInterface
     /**
      * Dispatch domain event
      *
-     * @param object $event Event
+     * @param DomainEventInterface $event Event
      *
      * @return void
      */
-    public function dispatch($event): void;
+    public function dispatch(DomainEventInterface $event): void;
 
 }

@@ -27,8 +27,8 @@ indent_style = space
 indent_size = 4
 
 [*.sh]
-indent_style = tab
-indent_size = 4
+indent_style = space
+indent_size = 2
 
 [*.xml]
 indent_style = space
@@ -36,8 +36,7 @@ indent_size = 4
 
 [*.{yaml,yml}]
 indent_style = space
-indent_size = 4
-trim_trailing_whitespace = false
+indent_size = 2
 
 [.php_cs{,.dist}]
 indent_style = space
@@ -47,12 +46,8 @@ indent_size = 4
 indent_style = space
 indent_size = 4
 
-[docker-compose{,.*}.{yaml,yml}]
-indent_style = space
-indent_size = 2
-
 [Dockerfile]
-indent_style = tab
+indent_style = space
 indent_size = 4
 
 [package.json]
