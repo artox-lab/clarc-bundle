@@ -13,3 +13,12 @@
 * Removed `ArtoxLab\Bundle\ClarcBundle\Core\Entity\Bus\CommandBus`
 * Removed `ArtoxLab\Bundle\ClarcBundle\Core\Entity\Bus\EventBus`
 * Removed `ArtoxLab\Bundle\ClarcBundle\Core\Entity\Bus\QueryBus`
+
+## 5.1.1
+* Updated `ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Bus\Middleware\ValidationMiddleware` 
+  
+  `HandlerFailedException` won't override original exception
+* Added `ArtoxLab\Bundle\ClarcBundle\Core\Entity\Exceptions\DomainHttpException`
+  
+  Exception extends Symfony's HttpException. Extend DomainHttpException in case
+  if you need to return some Exception when front-end part is PHP-rendered 
