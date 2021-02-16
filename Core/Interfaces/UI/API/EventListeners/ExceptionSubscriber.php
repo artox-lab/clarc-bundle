@@ -106,26 +106,6 @@ class ExceptionSubscriber implements EventSubscriberInterface
 
         $data = [];
 
-        if ($exception instanceof HandlerFailedException && empty($exception->getNestedExceptions()) === false) {
-            $data = [
-                'status' => $exception->getCode(),
-                'errors' => [],
-            ];
-
-            foreach ($exception->getNestedExceptions() as $nestedException) {
-                $message = $this->translator->trans($nestedException->getMessage(), [], 'exceptions');
-
-                if ($nestedException instanceof DomainException) {
-                    $data['errors']['domain'][] = $message;
-                    continue;
-                }
-
-                if ('dev' === $this->environment) {
-                    $data['errors']['unexpected'][] = $message;
-                }
-            }
-        }
-
         if ($exception instanceof ValidationFailedException) {
             $data = [
                 'status' => $exception->getCode(),
