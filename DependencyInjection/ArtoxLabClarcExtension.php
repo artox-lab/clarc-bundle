@@ -77,7 +77,7 @@ class ArtoxLabClarcExtension extends Extension implements PrependExtensionInterf
     /**
      * Loads a specific configuration.
      *
-     * @param array            $configs   Configs
+     * @param array<mixed>     $configs   Configs
      * @param ContainerBuilder $container Container Builder
      *
      * @throws InvalidArgumentException When provided tag is not defined in this extension
@@ -102,7 +102,7 @@ class ArtoxLabClarcExtension extends Extension implements PrependExtensionInterf
     /**
      * Load configuration for API
      *
-     * @param array            $config    Config of API
+     * @param array<mixed>     $config    Config of API
      * @param ContainerBuilder $container Container Builder
      *
      * @return void

@@ -132,7 +132,7 @@ class MakeUseCaseQuery extends AbstractMaker
      *
      * @throws Exception
      *
-     * @return array
+     * @return string[]
      */
     protected function searchAllDTOClasses(): array
     {

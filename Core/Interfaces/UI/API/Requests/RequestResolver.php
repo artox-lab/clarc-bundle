@@ -72,7 +72,7 @@ class RequestResolver implements ArgumentValueResolverInterface
      * @param Request          $request  Incoming request
      * @param ArgumentMetadata $argument Meta
      *
-     * @return Generator
+     * @return Generator<AbstractRequest|mixed>
      */
     public function resolve(Request $request, ArgumentMetadata $argument)
     {

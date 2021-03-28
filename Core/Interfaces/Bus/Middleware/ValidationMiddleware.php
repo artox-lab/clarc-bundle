@@ -49,8 +49,10 @@ class ValidationMiddleware implements MiddlewareInterface
     {
         $message = $envelope->getMessage();
         $groups  = null;
-
         if (null !== ($validationStamp = $envelope->last(ValidationStamp::class))) {
+            /**
+             * @var ValidationStamp $validationStamp
+             */
             $groups = $validationStamp->getGroups();
         }
 

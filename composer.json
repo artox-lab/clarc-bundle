@@ -25,7 +25,8 @@
     "require-dev": {
         "roave/security-advisories": "dev-master",
         "symfony/maker-bundle": "^1.13",
-        "haydenpierce/class-finder": "^0.4.0"
+        "haydenpierce/class-finder": "^0.4.0",
+        "phpstan/phpstan": "^0.12.82"
     },
     "autoload": {
         "psr-4": {

@@ -16,7 +16,7 @@ abstract class AbstractRequest implements RequestInterface
     /**
      * Request params
      *
-     * @var array
+     * @var array<string, mixed>
      */
     protected $params = [];
 
@@ -39,14 +39,14 @@ abstract class AbstractRequest implements RequestInterface
      * keys - names of request parameters
      * values - array of constraints
      *
-     * @return array
+     * @return array<string, mixed>
      */
     abstract public function getRules() : array;
 
     /**
      * Request's params
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getRequestParams() : array
     {
@@ -56,7 +56,7 @@ abstract class AbstractRequest implements RequestInterface
     /**
      * Groups
      *
-     * @return array
+     * @return array<string>
      */
     public function getGroups() : array
     {

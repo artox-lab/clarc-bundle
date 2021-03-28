@@ -29,7 +29,7 @@ class Paginator implements PaginatorInterface
     /**
      * Results
      *
-     * @var array
+     * @var array<mixed>
      */
     protected $results;
 
@@ -43,10 +43,10 @@ class Paginator implements PaginatorInterface
     /**
      * Paginator constructor.
      *
-     * @param int   $page    Number of page
-     * @param int   $limit   Number of results per page
-     * @param array $results Results
-     * @param int   $total   The total number of results
+     * @param int          $page    Number of page
+     * @param int          $limit   Number of results per page
+     * @param array<mixed> $results Results
+     * @param int          $total   The total number of results
      */
     public function __construct(int $page, int $limit, array $results, int $total)
     {
@@ -59,7 +59,7 @@ class Paginator implements PaginatorInterface
     /**
      * Results
      *
-     * @return array
+     * @return array<mixed>
      */
     public function getResults(): array
     {

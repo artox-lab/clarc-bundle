@@ -29,7 +29,7 @@ interface PaginatorInterface
     /**
      * Results
      *
-     * @return array
+     * @return array<mixed>
      */
     public function getResults() : array;
 
