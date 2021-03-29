@@ -60,6 +60,7 @@ class AbstractApiController extends AbstractController
         CommandBusInterface $commandBus,
         QueryBusInterface $queryBus
     ) {
+        /** @phpstan-ignore-next-line */
         $this->fractalSerializer = $fractalSerializer;
         $this->commandBus        = $commandBus;
         $this->queryBus          = $queryBus;
@@ -68,10 +69,10 @@ class AbstractApiController extends AbstractController
     /**
      * Response of creating resource
      *
-     * @param null  $data    Data
-     * @param int   $status  Status code of response
-     * @param array $headers Headers
-     * @param array $context Serializer's context
+     * @param null         $data    Data
+     * @param int          $status  Status code of response
+     * @param array<mixed> $headers Headers
+     * @param array<mixed> $context Serializer's context
      *
      * @return Response
      */
@@ -95,10 +96,10 @@ class AbstractApiController extends AbstractController
     /**
      * Transform data to API resources
      *
-     * @param array|PaginatorInterface $data        Data
-     * @param TransformerAbstract      $transformer Transformer
+     * @param array<mixed>|PaginatorInterface $data        Data
+     * @param TransformerAbstract             $transformer Transformer
      *
-     * @return array
+     * @return array<mixed>
      */
     protected function transform($data, TransformerAbstract $transformer) : array
     {

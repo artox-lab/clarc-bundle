@@ -18,6 +18,8 @@ class NullObjectArraySerializer extends DataArraySerializer
      * Empty value in response
      *
      * @return null
+     *
+     * @phpstan-ignore-next-line
      */
     public function null()
     {

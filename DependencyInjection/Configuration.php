@@ -28,6 +28,7 @@ class Configuration implements ConfigurationInterface
     {
         $treeBuilder = new TreeBuilder(ArtoxLabClarcBundle::CONFIG_BUNDLE_NAMESPACE);
 
+        /** @phpstan-ignore-next-line */
         $this->getRootNode($treeBuilder)
             ->children()
                 ->arrayNode('api')
