@@ -60,7 +60,7 @@ class AbstractApiController extends AbstractController
         CommandBusInterface $commandBus,
         QueryBusInterface $queryBus
     ) {
-        /** @phpstan-ignore-next-line */
+         // @phpstan-ignore-next-line
         $this->fractalSerializer = $fractalSerializer;
         $this->commandBus        = $commandBus;
         $this->queryBus          = $queryBus;
