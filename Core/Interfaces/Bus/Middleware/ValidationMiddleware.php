@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Bus\Middleware;
 
 use ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Exceptions\CommandValidationFailedException;
+use Exception;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\Exception\HandlerFailedException;
 use Symfony\Component\Messenger\Middleware\MiddlewareInterface;
@@ -44,6 +45,7 @@ class ValidationMiddleware implements MiddlewareInterface
      * @param StackInterface $stack    Stack
      *
      * @return Envelope
+     * @throws Exception
      */
     public function handle(Envelope $envelope, StackInterface $stack): Envelope
     {
@@ -63,7 +65,7 @@ class ValidationMiddleware implements MiddlewareInterface
         try {
             $returnedEnvelope = $stack->next()->handle($envelope, $stack);
         } catch (HandlerFailedException $e) {
-            throw $e->getPrevious();
+            throw ($e->getPrevious() ?? $e);
         }
 
         return $returnedEnvelope;
