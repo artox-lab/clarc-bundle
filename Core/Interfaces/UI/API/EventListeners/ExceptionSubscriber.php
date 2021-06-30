@@ -147,7 +147,7 @@ class ExceptionSubscriber implements EventSubscriberInterface
 
             $data = [
                 'status' => $exception->getCode(),
-                'errors' => ['domain' => [$exception->getMessage()]],
+                'errors' => ['domain' => [$this->translator->trans($exception->getMessage(), [], 'exceptions')]],
             ];
         }
 
