@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\UI\API\EventListeners;
 
+use ArtoxLab\Bundle\ClarcBundle\Core\Entity\Exceptions\DomainTranslatableException;
 use ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Exceptions\ValidationFailedException;
 use DomainException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -17,7 +18,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\Messenger\Exception\HandlerFailedException;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Throwable;
 
@@ -122,12 +122,20 @@ class ExceptionSubscriber implements EventSubscriberInterface
             ];
         }
 
-        if ($exception instanceof DomainException) {
+        if ($exception instanceof DomainTranslatableException) {
+            $exception->setTranslator($this->translator);
             $code = $exception->getCode();
 
             $data = [
                 'status' => $exception->getCode(),
-                'errors' => ['domain' => [$this->translator->trans($exception->getMessage(), [], 'exceptions')]],
+                'errors' => ['domain' => [$exception->getTranslatedMessage()]],
+            ];
+        } else if ($exception instanceof DomainException) {
+            $code = $exception->getCode();
+
+            $data = [
+                'status' => $exception->getCode(),
+                'errors' => ['domain' => [$exception->getMessage()]],
             ];
         }
 
