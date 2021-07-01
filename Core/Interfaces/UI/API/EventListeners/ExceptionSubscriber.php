@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\UI\API\EventListeners;
 
+use ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Exceptions\TranslatableExceptionInterface;
 use ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Exceptions\ValidationFailedException;
 use DomainException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -123,11 +124,16 @@ class ExceptionSubscriber implements EventSubscriberInterface
         }
 
         if ($exception instanceof DomainException) {
-            $code = $exception->getCode();
+            $code    = $exception->getCode();
+            $message = $exception->getMessage();
+
+            if ($exception instanceof TranslatableExceptionInterface) {
+                $message = $this->translator->trans($message, $exception->getParameters(), 'exceptions');
+            }
 
             $data = [
                 'status' => $exception->getCode(),
-                'errors' => ['domain' => [$this->translator->trans($exception->getMessage(), [], 'exceptions')]],
+                'errors' => ['domain' => [$message]],
             ];
         }
 
