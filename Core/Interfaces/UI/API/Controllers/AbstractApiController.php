@@ -83,7 +83,7 @@ class AbstractApiController extends AbstractController
      *
      * @return Response
      */
-    public function cached($data, int $maxAge, int $status = 200) : Response
+    public function cached(Response $response, int $lifetime) : Response
     {
         return $this->json($data, $status)->setMaxAge($maxAge);
     }
