@@ -66,6 +66,20 @@ class AbstractApiController extends AbstractController
     }
 
     /**
+     * Response with Cache-Control header
+     *
+     * @param mixed $data   Data
+     * @param int   $maxAge Cache max age
+     * @param int   $status Status code of response
+     *
+     * @return Response
+     */
+    public function cached($data, int $maxAge, int $status = 200) : Response
+    {
+        return $this->json($data, $status)->setMaxAge($maxAge);
+    }
+
+    /**
      * Response of creating resource
      *
      * @param null  $data    Data
