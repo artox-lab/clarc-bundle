@@ -66,6 +66,19 @@ class AbstractApiController extends AbstractController
     }
 
     /**
+     * Response with Cache-Control header
+     *
+     * @param Response $response Response
+     * @param int      $lifetime Cache max age
+     *
+     * @return Response
+     */
+    public function cached(Response $response, int $lifetime) : Response
+    {
+        return $response->setMaxAge($lifetime);
+    }
+
+    /**
      * Response of creating resource
      *
      * @param null  $data    Data
