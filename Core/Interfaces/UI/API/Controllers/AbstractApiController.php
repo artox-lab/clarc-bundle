@@ -26,6 +26,15 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AbstractApiController extends AbstractController
 {
+    public const CACHE_MAX_AGE_MINUTE = 60;
+
+    public const CACHE_MAX_AGE_HOUR = 3600;
+
+    public const CACHE_MAX_AGE_DAY = 86400;
+
+    public const CACHE_MAX_AGE_WEEK = 604800;
+
+    public const CACHE_MAX_AGE_MONTH = 2592000;
 
     /**
      * Fractal serializer
