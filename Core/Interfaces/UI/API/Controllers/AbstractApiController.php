@@ -26,15 +26,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AbstractApiController extends AbstractController
 {
-    public const CACHE_MAX_AGE_MINUTE = 60;
-
-    public const CACHE_MAX_AGE_HOUR = 3600;
-
-    public const CACHE_MAX_AGE_DAY = 86400;
-
-    public const CACHE_MAX_AGE_WEEK = 604800;
-
-    public const CACHE_MAX_AGE_MONTH = 2592000;
 
     /**
      * Fractal serializer
@@ -77,15 +68,14 @@ class AbstractApiController extends AbstractController
     /**
      * Response with Cache-Control header
      *
-     * @param mixed $data   Data
-     * @param int   $maxAge Cache max age
-     * @param int   $status Status code of response
+     * @param Response $data   Response
+     * @param int      $maxAge Cache max age
      *
      * @return Response
      */
-    public function cached($data, int $maxAge, int $status = 200) : Response
+    public function cached(Response $data, int $maxAge) : Response
     {
-        return $this->json($data, $status)->setMaxAge($maxAge);
+        return $data->setMaxAge($maxAge);
     }
 
     /**
