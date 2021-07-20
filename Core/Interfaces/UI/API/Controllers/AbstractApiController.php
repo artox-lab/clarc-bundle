@@ -11,6 +11,7 @@ namespace ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\UI\API\Controllers;
 
 use ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Bus\CommandBus\CommandBusInterface;
 use ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Bus\QueryBus\QueryBusInterface;
+use ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\UI\API\Transformers\EmptyArrayTransformer;
 use ArtoxLab\Bundle\ClarcBundle\Core\UseCases\Interfaces\PaginatorInterface;
 use League\Fractal\Manager;
 use League\Fractal\Pagination\PagerfantaPaginatorAdapter;
@@ -141,6 +142,8 @@ class AbstractApiController extends AbstractController
             $resource->setPaginator($paginatorAdapter);
         } else if (is_array($data) === true && is_numeric(key($data)) === true) {
             $resource = new Collection($data, $transformer);
+        } else if (is_array($data) === true && empty($data) === true) {
+            $resource = new Collection($data, new EmptyArrayTransformer());
         } else {
             $resource = new Item($data, $transformer);
         }
