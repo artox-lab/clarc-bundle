@@ -139,7 +139,7 @@ class AbstractApiController extends AbstractController
             );
             $resource         = new Collection($results, $transformer);
             $resource->setPaginator($paginatorAdapter);
-        } else if (is_array($data) === true && is_numeric(key($data)) === true) {
+        } else if (is_array($data) === true && (is_numeric(key($data)) === true || empty($data) === true)) {
             $resource = new Collection($data, $transformer);
         } else {
             $resource = new Item($data, $transformer);
