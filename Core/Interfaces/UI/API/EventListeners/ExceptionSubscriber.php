@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\UI\API\EventListeners;
 
+use ArtoxLab\Bundle\ClarcBundle\Core\Entity\Exceptions\DomainHttpException;
 use ArtoxLab\Bundle\ClarcBundle\Core\Entity\Exceptions\DomainTranslatableException;
 use ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Exceptions\ValidationFailedException;
 use DomainException;
@@ -113,7 +114,15 @@ class ExceptionSubscriber implements EventSubscriberInterface
             ];
         }
 
-        if ($exception instanceof HttpException) {
+        if ($exception instanceof DomainHttpException) {
+            $exception->setTranslator($this->translator);
+            $code = $exception->getStatusCode();
+
+            $data = [
+                'status' => $exception->getStatusCode(),
+                'errors' => ['http' => [$exception->getTranslatedMessage()]],
+            ];
+        } else if ($exception instanceof HttpException) {
             $code = $exception->getStatusCode();
 
             $data = [
