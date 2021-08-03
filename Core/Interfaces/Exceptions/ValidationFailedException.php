@@ -43,7 +43,9 @@ class ValidationFailedException extends InvalidArgumentException
         }
 
         foreach ($violations as $violation) {
-            $this->validationErrors[$violation->getPropertyPath()][] = $violation->getMessage();
+            $path = $this->formatPropertyPath($violation->getPropertyPath());
+
+            $this->validationErrors[$path][] = $violation->getMessage();
         }
     }
 
@@ -55,6 +57,32 @@ class ValidationFailedException extends InvalidArgumentException
     public function getValidationErrors() : array
     {
         return $this->validationErrors;
+    }
+
+    /**
+     * Format property path with violations
+     *
+     * @param string $rawPath Raw property path
+     *
+     * @return string
+     */
+    private function formatPropertyPath(string $rawPath): string
+    {
+        preg_match_all('/(^[^\[;^\]]+)|(\[[^[]+])/', $rawPath, $matches);
+
+        $groups = reset($matches);
+
+        if ($groups === false) {
+            $groups = [];
+        }
+
+        return array_reduce(
+            $groups,
+            static fn (string $path, string $part): string => (
+                $path . '[' . trim($part, '[ ]') . ']'
+            ),
+            ''
+        );
     }
 
 }
