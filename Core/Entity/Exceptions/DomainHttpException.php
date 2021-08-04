@@ -23,7 +23,7 @@ class DomainHttpException extends HttpException implements TranslatableException
      */
     public function __construct(string $message, int $statusCode)
     {
-        parent::__construct($statusCode, $message);
+        parent::__construct($statusCode, $message, null, [], $statusCode);
     }
 
     /**
