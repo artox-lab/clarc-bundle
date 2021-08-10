@@ -76,14 +76,12 @@ class ValidationFailedException extends InvalidArgumentException
             $groups = [];
         }
 
-        $root = trim((array_shift($groups) ?? ''), '[]');
-
         return array_reduce(
             $groups,
             static fn (string $path, string $part): string => (
-                $path . '[' . trim($part, '[ ]') . ']'
+                $path . '[' . trim($part, '[]') . ']'
             ),
-            $root
+            ''
         );
     }
 
