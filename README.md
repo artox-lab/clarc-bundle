@@ -51,5 +51,27 @@ artox_lab_clarc:
     api:
         serializer:
             class: \ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\UI\API\Transformers\Serializers\NullObjectArraySerializer
+```
+
+Configure uuid generator
+
+```yaml
+# config/packages/doctrine_uuid.yaml
+
+doctrine:
+    dbal:
+        types:
+            uuid: Ramsey\Uuid\Doctrine\UuidType
+```
+
+```xml
+<!-- src/Interfaces/Resources/config/doctrine/app/Test.Test.orm.xml -->
+
+<id name="uuid" column="uuid" type="uuid">
+    <generator strategy="CUSTOM" />
+    <custom-id-generator class="ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Gateways\DoctrineUuidGenerator" />
+</id>
+```
+
 
 
