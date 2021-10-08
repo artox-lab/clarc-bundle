@@ -45,10 +45,16 @@ class ValidationFailedException extends InvalidArgumentException
 
             $this->validationErrors[$path][] = $violation->getMessage();
 
+            $invalidValue = $violation->getInvalidValue();
+
+            if (is_array($invalidValue) === true) {
+                $invalidValue = var_export($invalidValue, true);
+            }
+
             $msg = sprintf(
                 '%s="%s" error: "%s"; ',
                 $path,
-                $violation->getInvalidValue(),
+                $invalidValue,
                 $violation->getMessage()
             );
             $this->basicMessage .= $msg;
