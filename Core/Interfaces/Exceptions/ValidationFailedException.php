@@ -20,7 +20,7 @@ class ValidationFailedException extends InvalidArgumentException
      *
      * @var string
      */
-    protected $basicMessage = 'Validation error';
+    protected $basicMessage = 'Validation error ';
 
     /**
      * Validation errors
@@ -36,8 +36,6 @@ class ValidationFailedException extends InvalidArgumentException
      */
     public function __construct(ConstraintViolationListInterface $violations)
     {
-        parent::__construct($this->basicMessage, Response::HTTP_UNPROCESSABLE_ENTITY);
-
         if (count($violations) < 1) {
             return;
         }
@@ -46,7 +44,17 @@ class ValidationFailedException extends InvalidArgumentException
             $path = $this->formatPropertyPath($violation->getPropertyPath());
 
             $this->validationErrors[$path][] = $violation->getMessage();
+
+            $msg = sprintf(
+                '%s="%s" error: "%s"; ',
+                $path,
+                $violation->getInvalidValue(),
+                $violation->getMessage()
+            );
+            $this->basicMessage .= $msg;
         }
+
+        parent::__construct($this->basicMessage, Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
     /**
