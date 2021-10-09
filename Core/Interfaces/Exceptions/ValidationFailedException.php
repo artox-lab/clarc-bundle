@@ -74,7 +74,10 @@ class ValidationFailedException extends InvalidArgumentException
     }
 
     /**
-     * Format property path with violations
+     * Unify the property path with violations to a single format
+     * example:
+     *    - path[to][prop]   -> [path][to][prop]
+     *    - [path][to][prop] -> [path][to][prop]
      *
      * @param string $rawPath Raw property path
      *
