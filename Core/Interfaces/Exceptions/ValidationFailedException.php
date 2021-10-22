@@ -20,7 +20,7 @@ class ValidationFailedException extends InvalidArgumentException
      *
      * @var string
      */
-    protected $basicMessage = 'Validation error';
+    protected $basicMessage = 'Validation error ';
 
     /**
      * Validation errors
@@ -36,15 +36,31 @@ class ValidationFailedException extends InvalidArgumentException
      */
     public function __construct(ConstraintViolationListInterface $violations)
     {
-        parent::__construct($this->basicMessage, Response::HTTP_UNPROCESSABLE_ENTITY);
-
         if (count($violations) < 1) {
             return;
         }
 
         foreach ($violations as $violation) {
-            $this->validationErrors[$violation->getPropertyPath()][] = $violation->getMessage();
+            $path = $this->formatPropertyPath($violation->getPropertyPath());
+
+            $this->validationErrors[$path][] = $violation->getMessage();
+
+            $invalidValue = $violation->getInvalidValue();
+
+            if (is_array($invalidValue) === true) {
+                $invalidValue = var_export($invalidValue, true);
+            }
+
+            $msg = sprintf(
+                '%s="%s" error: "%s"; ',
+                $path,
+                $invalidValue,
+                $violation->getMessage()
+            );
+            $this->basicMessage .= $msg;
         }
+
+        parent::__construct($this->basicMessage, Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
     /**
@@ -55,6 +71,35 @@ class ValidationFailedException extends InvalidArgumentException
     public function getValidationErrors() : array
     {
         return $this->validationErrors;
+    }
+
+    /**
+     * Unify the property path with violations to a single format
+     * example:
+     *    - path[to][prop]   -> [path][to][prop]
+     *    - [path][to][prop] -> [path][to][prop]
+     *
+     * @param string $rawPath Raw property path
+     *
+     * @return string
+     */
+    private function formatPropertyPath(string $rawPath): string
+    {
+        preg_match_all('/([^\[;^\]]+)|(\[[^[]+])/', $rawPath, $matches);
+
+        $groups = reset($matches);
+
+        if ($groups === false) {
+            $groups = [];
+        }
+
+        return array_reduce(
+            $groups,
+            static fn (string $path, string $part): string => (
+                $path . '[' . trim($part, '[]') . ']'
+            ),
+            ''
+        );
     }
 
 }
