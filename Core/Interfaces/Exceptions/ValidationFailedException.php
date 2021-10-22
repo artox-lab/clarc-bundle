@@ -47,7 +47,7 @@ class ValidationFailedException extends InvalidArgumentException
 
             $invalidValue = $violation->getInvalidValue();
 
-            if (is_array($invalidValue) === true) {
+            if (is_array($invalidValue) === true || is_object($invalidValue)) {
                 $invalidValue = var_export($invalidValue, true);
             }
 
