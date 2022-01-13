@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 5.2.12
++ Add messenger middleware for adding amqp routing key `artox_lab_clarc.messenger.middleware.add_amqp_routing_key`
++ Add messenger transport serializer for protobuf messages `artox_lab_clarc.messenger.transport.serializer.protobuf`
+
 ## 5.2.11
 * Added RBAC - `ArtoxLab\Bundle\ClarcBundle\Core\Entity\Security\AuthorizationChecker`.
 

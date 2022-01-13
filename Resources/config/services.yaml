@@ -26,6 +26,12 @@ services:
   artox_lab_clarc.bus.validation:
     class: ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Bus\Middleware\ValidationMiddleware
 
+  artox_lab_clarc.messenger.middleware.add_amqp_routing_key:
+    class: ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Bus\Middleware\AddAmqpRoutingKeyMiddleware
+
+  artox_lab_clarc.messenger.transport.serializer.protobuf:
+    class: ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Bus\Transport\Serialization\ProtobufSerializer
+
   api_exception_subscriber:
     class: ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\UI\API\EventListeners\ExceptionSubscriber
     arguments:
