@@ -57,6 +57,20 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
             ->end()
+                ->arrayNode('messenger')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->arrayNode('transports')
+                            ->normalizeKeys(false)
+                            ->useAttributeAsKey('name')
+                            ->arrayPrototype()
+                                ->children()
+                                    ->scalarNode('bus')->defaultNull()->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
         ;
 
         return $treeBuilder;
