@@ -63,3 +63,7 @@ artox_lab_clarc:
 1. Setup roles and permissions in config
 2. Require `ArtoxLab\Bundle\ClarcBundle\Core\Entity\Security\AuthorizationChecker` in your use case / controller
 3. Check user permission ```$this->authorizationChecker->isGranted('permission_name')``` 
+
+# Learn more
+
+- [Messaging between services](doc/message_bus/services_communication/index.md)
