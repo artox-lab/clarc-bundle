@@ -1,8 +1,12 @@
 # CHANGELOG
 
 ## 5.2.12
-+ Add messenger middleware for adding amqp routing key `artox_lab_clarc.messenger.middleware.add_amqp_routing_key`
-+ Add messenger transport serializer for protobuf messages `artox_lab_clarc.messenger.transport.serializer.protobuf`
++ Added built-in transport and buses for communication between services
++ Added `BroadcastingBus` to dispatch message to external services
++ To prevent message validation error added `@type` annotation to ignore list (`IgnoreDoctrineAnnotationReaderPass`)
++ Added messenger middleware for adding amqp routing key `artox_lab_clarc.messenger.middleware.add_amqp_routing_key`
++ Added messenger transport serializer for protobuf messages `artox_lab_clarc.messenger.transport.serializer.protobuf` and `artox_lab_clarc.messenger.transport.serializer.protobuf_self_origin_stamps` with validation of message origin
++ Add `StringSigner` service for sign messages (used in `artox_lab_clarc.messenger.transport.serializer.protobuf_self_origin_stamps`)
 
 ## 5.2.11
 * Added RBAC - `ArtoxLab\Bundle\ClarcBundle\Core\Entity\Security\AuthorizationChecker`.
