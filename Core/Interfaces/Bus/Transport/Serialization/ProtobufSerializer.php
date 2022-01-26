@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Protobuf serializer
+ *
+ * @author Maxim Petrovich <m.petrovich@artox.com>
+ */
+
 namespace ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Bus\Transport\Serialization;
 
 use Google\Protobuf\Internal\Message as ProtobufMessage;
@@ -13,10 +19,7 @@ class ProtobufSerializer implements SerializerInterface
 {
     private const STAMP_HEADER_PREFIX = 'X-Message-Stamp-';
 
-    /**
-     * @var string
-     */
-    private $format;
+    private string $format;
 
     public function __construct(string $format = 'json')
     {
@@ -43,17 +46,14 @@ class ProtobufSerializer implements SerializerInterface
             throw new MessageDecodingFailedException(sprintf('Message class "%s" is not a subclass of %s.', $messageClass, ProtobufMessage::class));
         }
 
-        $stamps = $this->decodeStamps($encodedEnvelope);
-
-        $message = new $messageClass;
-
         try {
+            $message = new $messageClass();
             $message->mergeFromJsonString($encodedEnvelope['body']);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             throw new MessageDecodingFailedException('Could not decode message: '.$e->getMessage(), $e->getCode(), $e);
         }
 
-        return new Envelope($message, $stamps);
+        return new Envelope($message, $this->decodeStamps($encodedEnvelope));
     }
 
     public function encode(Envelope $envelope): array
@@ -92,10 +92,6 @@ class ProtobufSerializer implements SerializerInterface
 
     /**
      * Convert message type string to FQCN class name
-     *
-     * @param string $type Message type
-     *
-     * @return string
      */
     private function getClassFromMessageType(string $type): string
     {
