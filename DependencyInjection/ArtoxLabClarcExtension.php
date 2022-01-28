@@ -90,7 +90,7 @@ class ArtoxLabClarcExtension extends Extension implements PrependExtensionInterf
                 'routing'     => [
                     AbstractCommand::class => 'sync',
                     AbstractQuery::class   => 'sync',
-                    \Google\Protobuf\Internal\Message::class => 'broadcasting_events',
+                    \Google\Protobuf\Internal\Message::class => 'broadcasting',
                 ],
             ],
         ];
