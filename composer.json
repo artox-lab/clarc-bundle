@@ -23,9 +23,10 @@
         "symfony/validator": "^5.2"
     },
     "require-dev": {
+        "haydenpierce/class-finder": "^0.4.0",
+        "phpunit/phpunit": "^9.5",
         "roave/security-advisories": "dev-master",
-        "symfony/maker-bundle": "^1.29",
-        "haydenpierce/class-finder": "^0.4.0"
+        "symfony/maker-bundle": "^1.29"
     },
     "config": {
         "sort-packages": true
@@ -37,5 +38,10 @@
         "exclude-from-classmap": [
             "/Tests/"
         ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "App\\Tests\\": "Tests/"
+        }
     }
 }
