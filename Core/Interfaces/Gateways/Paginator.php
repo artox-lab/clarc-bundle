@@ -8,8 +8,15 @@
 declare(strict_types=1);
 
 namespace ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Gateways;
+use ArrayObject;
 use ArtoxLab\Bundle\ClarcBundle\Core\UseCases\Interfaces\PaginatorInterface;
+use Traversable;
 
+/**
+ * @template T
+ *
+ * @implements PaginatorInterface<T>
+ */
 class Paginator implements PaginatorInterface
 {
     /**
@@ -29,7 +36,7 @@ class Paginator implements PaginatorInterface
     /**
      * Results
      *
-     * @var array
+     * @var array<T>
      */
     protected $results;
 
@@ -43,10 +50,10 @@ class Paginator implements PaginatorInterface
     /**
      * Paginator constructor.
      *
-     * @param int   $page    Number of page
-     * @param int   $limit   Number of results per page
-     * @param array $results Results
-     * @param int   $total   The total number of results
+     * @param int      $page    Number of page
+     * @param int      $limit   Number of results per page
+     * @param array<T> $results Results
+     * @param int      $total   The total number of results
      */
     public function __construct(int $page, int $limit, array $results, int $total)
     {
@@ -59,7 +66,7 @@ class Paginator implements PaginatorInterface
     /**
      * Results
      *
-     * @return array
+     * @return array<T>
      */
     public function getResults(): array
     {
@@ -108,4 +115,16 @@ class Paginator implements PaginatorInterface
         $this->results = array_map($callback, $this->results);
     }
 
+    /**
+     * @return Traversable<T>
+     */
+    public function getIterator(): Traversable
+    {
+        return new ArrayObject($this->results);
+    }
+
+    public function count(): int
+    {
+        return count($this->results);
+    }
 }
