@@ -9,7 +9,16 @@ declare(strict_types=1);
 
 namespace ArtoxLab\Bundle\ClarcBundle\Core\UseCases\Interfaces;
 
-interface PaginatorInterface
+use Countable;
+use IteratorAggregate;
+use Traversable;
+
+/**
+ * @template T
+ *
+ * @extends IteratorAggregate<T>
+ */
+interface PaginatorInterface extends Countable, IteratorAggregate
 {
 
     /**
@@ -29,7 +38,7 @@ interface PaginatorInterface
     /**
      * Results
      *
-     * @return array
+     * @return array<T>
      */
     public function getResults() : array;
 
@@ -43,10 +52,14 @@ interface PaginatorInterface
     /**
      * Map results with callback
      *
-     * @param callable $callback Callback
+     * @param callable(T): mixed $callback Callback
      *
      * @return void
      */
     public function map(callable $callback) : void;
 
+    /**
+     * @return Traversable<T>
+     */
+    public function getIterator(): Traversable;
 }
