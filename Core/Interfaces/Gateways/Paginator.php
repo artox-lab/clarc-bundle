@@ -106,7 +106,7 @@ class Paginator implements PaginatorInterface
     /**
      * Map results with callback
      *
-     * @param callable $callback Callback
+     * @param callable(T): mixed $callback Callback
      *
      * @return void
      */
