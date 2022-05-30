@@ -10,22 +10,22 @@
         }
     ],
     "require": {
-        "php": ">=7.4 || ^8.0",
+        "php": "^8.0.2",
         "ext-json": "*",
         "doctrine/annotations": "^1.12",
         "league/fractal": "^0.19",
         "liip/monitor-bundle": "^2.16",
         "pagerfanta/pagerfanta": "^3.0",
         "symfony-bundles/json-request-bundle": "^4.0",
-        "symfony/framework-bundle": "^5.2",
-        "symfony/messenger": "^5.2",
-        "symfony/translation": "^5.2",
-        "symfony/validator": "^5.2"
+        "symfony/framework-bundle": "^6.0",
+        "symfony/messenger": "^6.0",
+        "symfony/translation": "^6.0",
+        "symfony/validator": "^6.0"
     },
     "require-dev": {
         "haydenpierce/class-finder": "^0.4.0",
         "phpunit/phpunit": "^9.5",
-        "roave/security-advisories": "dev-master",
+        "roave/security-advisories": "dev-latest",
         "symfony/maker-bundle": "^1.29"
     },
     "config": {
