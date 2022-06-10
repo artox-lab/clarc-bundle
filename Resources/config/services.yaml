@@ -49,3 +49,23 @@ services:
     resource: '../../Core/Interfaces/UI/API/Controllers/'
     tags: [ 'controller.service_arguments' ]
     calls: [ [ 'setContainer', [ '@service_container' ] ] ]
+
+  # Security
+  artox_lab_clarc.security.authorization_checker:
+    class: ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Security\AuthorizationChecker
+
+  ### RBAC
+  artox_lab_clarc.security.rbac.permission_checker:
+    class: ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Security\RBAC\PermissionChecker
+    arguments:
+      - 'rolesPermissions'
+
+  ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Security\RBAC\PermissionChecker: '@artox_lab_clarc.security.rbac.permission_checker'
+
+  ArtoxLab\Bundle\ClarcBundle\Core\Entity\Security\AuthorizationChecker: '@artox_lab_clarc.security.authorization_checker'
+  ### RBAC Voters
+  artox_lab_clarc.security.voter.role_permission:
+    class: ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Security\Voters\RolePermissionVoter
+    tags: ['security.voter']
+
+

@@ -39,7 +39,25 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
-            ->end();
+            ->end()
+            ->children()
+                ->arrayNode('security')
+                    ->children()
+                        ->arrayNode('rbac')
+                            ->children()
+                                ->arrayNode('permissions')
+                                    ->isRequired()
+                                    ->useAttributeAsKey('name')
+                                    ->arrayPrototype()
+                                        ->prototype('scalar')->end()
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
 
         return $treeBuilder;
     }

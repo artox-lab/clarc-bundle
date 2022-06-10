@@ -51,5 +51,15 @@ artox_lab_clarc:
     api:
         serializer:
             class: \ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\UI\API\Transformers\Serializers\NullObjectArraySerializer
+    security:
+        rbac:
+            permissions:
+                ROLE_MAINTAINER:
+                    - show
+```
 
+### How to use RBAC
 
+1. Setup roles and permissions in config
+2. Require `ArtoxLab\Bundle\ClarcBundle\Core\Entity\Security\AuthorizationChecker` in your use case / controller
+3. Check user permission ```$this->authorizationChecker->isGranted('permission_name')``` 

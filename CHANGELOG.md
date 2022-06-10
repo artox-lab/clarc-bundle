@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 5.2.11
+* Added RBAC - `ArtoxLab\Bundle\ClarcBundle\Core\Entity\Security\AuthorizationChecker`.
+
 ## 5.1.1
 * Updated `ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Bus\Middleware\ValidationMiddleware`. 
   `HandlerFailedException` won't override original exception

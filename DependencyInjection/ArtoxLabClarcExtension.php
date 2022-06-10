@@ -97,6 +97,7 @@ class ArtoxLabClarcExtension extends Extension implements PrependExtensionInterf
         $config        = $this->processConfiguration($configuration, $configs);
 
         $this->loadApi(($config['api'] ?? []), $container);
+        $this->loadSecurity($config['security'] ?? [], $container);
     }
 
     /**
@@ -112,6 +113,13 @@ class ArtoxLabClarcExtension extends Extension implements PrependExtensionInterf
         if (false === empty($config['serializer']['class'])) {
             $container->setParameter('artox_lab_clarc.api.serializer.class', $config['serializer']['class']);
         }
+    }
+
+    private function loadSecurity(array $config, ContainerBuilder $container)
+    {
+        $container
+            ->getDefinition('artox_lab_clarc.security.rbac.permission_checker')
+            ->replaceArgument(0, $config['rbac']['permissions'] ?? []);
     }
 
 }
