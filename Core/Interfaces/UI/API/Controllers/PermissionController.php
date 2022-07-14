@@ -23,8 +23,11 @@ class PermissionController extends AbstractApiController
      *     response="200",
      *     description="Permissions list",
      *     @OA\JsonContent(
-     *        type="array",
-     *        @OA\Items(type="string", example="role.permission")
+     *        @OA\Property(
+     *          property="data",
+     *          type="array",
+     *          @OA\Items(type="string", example="role.permission")
+     *        )
      *     )
      * )
      *
@@ -36,6 +39,6 @@ class PermissionController extends AbstractApiController
         $command     = new FindAllPermissions\Command();
         $permissions = $this->queryBus->query($command);
 
-        return $this->json($permissions);
+        return $this->json(['data' => $permissions]);
     }
 }
