@@ -50,17 +50,24 @@ services:
     tags: [ 'controller.service_arguments' ]
     calls: [ [ 'setContainer', [ '@service_container' ] ] ]
 
+  # Use Cases
+  ArtoxLab\Bundle\ClarcBundle\Core\UseCases\Queries\User\FindAllPermissions\Interactor: ~
+
   # Security
   artox_lab_clarc.security.authorization_checker:
     class: ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Security\AuthorizationChecker
 
   ### RBAC
-  artox_lab_clarc.security.rbac.permission_checker:
-    class: ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Security\RBAC\PermissionChecker
+  artox_lab_clarc.security.permission_storage:
+    class: ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Security\PermissionStorage
+
+  ArtoxLab\Bundle\ClarcBundle\Core\Entity\Security\PermissionLoader: '@artox_lab_clarc.security.rbac.config_permission_loader'
+  ArtoxLab\Bundle\ClarcBundle\Core\Entity\Security\PermissionStorage: '@artox_lab_clarc.security.permission_storage'
+
+  artox_lab_clarc.security.rbac.config_permission_loader:
+    class: ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Security\ConfigPermissionLoader
     arguments:
       - 'rolesPermissions'
-
-  ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Security\RBAC\PermissionChecker: '@artox_lab_clarc.security.rbac.permission_checker'
 
   ArtoxLab\Bundle\ClarcBundle\Core\Entity\Security\AuthorizationChecker: '@artox_lab_clarc.security.authorization_checker'
   ### RBAC Voters
