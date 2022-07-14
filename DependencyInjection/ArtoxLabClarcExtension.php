@@ -118,7 +118,7 @@ class ArtoxLabClarcExtension extends Extension implements PrependExtensionInterf
     private function loadSecurity(array $config, ContainerBuilder $container)
     {
         $container
-            ->getDefinition('artox_lab_clarc.security.rbac.permission_checker')
+            ->getDefinition('artox_lab_clarc.security.rbac.config_permission_loader')
             ->replaceArgument(0, $config['rbac']['permissions'] ?? []);
     }
 

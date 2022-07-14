@@ -1,3 +1,9 @@
 artox_lab_health_check_ping_pong:
   path: /ping
   controller: ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\UI\API\Controllers\PingPongController::ping
+  methods: GET
+
+artox_lab_user_permissions:
+  path: /user/permissions
+  controller: ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\UI\API\Controllers\PermissionController::permissions
+  methods: GET

@@ -57,9 +57,37 @@ artox_lab_clarc:
                 ROLE_MAINTAINER:
                     - show
 ```
+## Security
+
+### How to setup ```get authenticated user permissions``` API endpoint
+
+1. Add to your project routes file `config/routes.yaml`
+
+```yaml
+artox_lab_clarc_bundle_user_permissions:
+    path: /v1/user/permissions
+    controller: ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\UI\API\Controllers\PermissionController::permissions
+    methods: GET
+```
+
+2. Setup firewall and access control in `config/packages/security.yaml`
+
+```yaml
+security:
+    firewalls:
+      users:
+          pattern: ^/v1
+          ...
+    access_control:
+        - { path: ^/v1/, roles: IS_AUTHENTICATED_FULLY }
+```
+
+> Note: If you have more than one authenticator - do the setup for each one
 
 ### How to use RBAC
 
-1. Setup roles and permissions in config
+1. Setup roles and permissions in config `config/packages/artox_lab_clarc.yaml`
 2. Require `ArtoxLab\Bundle\ClarcBundle\Core\Entity\Security\AuthorizationChecker` in your use case / controller
-3. Check user permission ```$this->authorizationChecker->isGranted('permission_name')``` 
+3. Check user permission ```$this->authorizationChecker->isGranted('permission_name')```
+
+
