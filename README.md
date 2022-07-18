@@ -91,3 +91,53 @@ security:
 3. Check user permission ```$this->authorizationChecker->isGranted('permission_name')```
 
 
+## Navigation
+
+1. Setup config
+
+```yaml
+# config/packages/artox_lab_clarc.yaml
+
+artox_lab_clarc:
+    navigation:
+        left_menu:
+            show_orphaned_root: false
+            items:
+                -   icon: portfolio
+                    title: Управление компаниями
+                    children:
+                        -   icon: something
+                            link: /companies
+                            title: Компании
+                            permissions: company.list
+                        -   link: /companies/add
+                            title: Добавить компанию
+                            permissions: [company.create]
+```
+
+2. Add routes
+
+```yaml
+# config/routes.yaml
+
+artox_lab_admin_user_navigations:
+    path: /user/navigations
+    controller: ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\UI\API\Controllers\NavigationController::userNavigation
+    methods: GET
+```
+
+3. Secure routes
+
+```yaml
+# config/packages/security.yaml
+
+security:
+    firewalls:
+        main:
+            pattern: ^/user
+            ...
+    access_control:
+        - { path: ^/user, roles: IS_AUTHENTICATED_FULLY}
+```
+
+4. Call API  `GET /user/navigations` with authentication

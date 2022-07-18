@@ -7,3 +7,8 @@ artox_lab_user_permissions:
   path: /user/permissions
   controller: ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\UI\API\Controllers\PermissionController::permissions
   methods: GET
+
+artox_lab_user_navigations:
+  path: /user/navigations
+  controller: ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\UI\API\Controllers\NavigationController::userNavigation
+  methods: GET
