@@ -98,6 +98,7 @@ class ArtoxLabClarcExtension extends Extension implements PrependExtensionInterf
 
         $this->loadApi(($config['api'] ?? []), $container);
         $this->loadSecurity($config['security'] ?? [], $container);
+        $this->loadNavigation($config['navigation'] ?? [], $container);
     }
 
     /**
@@ -120,6 +121,13 @@ class ArtoxLabClarcExtension extends Extension implements PrependExtensionInterf
         $container
             ->getDefinition('artox_lab_clarc.security.rbac.config_permission_loader')
             ->replaceArgument(0, $config['rbac']['permissions'] ?? []);
+    }
+
+    private function loadNavigation(array $config, ContainerBuilder $container): void
+    {
+        $container
+            ->getDefinition('artox_lab_clarc.navigation.config_navigation_loader')
+            ->replaceArgument(0, $config);
     }
 
 }

@@ -52,6 +52,7 @@ services:
 
   # Use Cases
   ArtoxLab\Bundle\ClarcBundle\Core\UseCases\Queries\User\FindAllPermissions\Interactor: ~
+  ArtoxLab\Bundle\ClarcBundle\Core\UseCases\Queries\User\Navigation\FindAll\Interactor: ~
 
   # Security
   artox_lab_clarc.security.authorization_checker:
@@ -75,4 +76,12 @@ services:
     class: ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Security\Voters\RolePermissionVoter
     tags: ['security.voter']
 
+  # Navigation
+  artox_lab_clarc.navigation.config_navigation_loader:
+    class: ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Navigation\ConfigLoader
+    arguments:
+      - 'config'
 
+  ArtoxLab\Bundle\ClarcBundle\Core\Entity\Navigation\NavigationLoader: '@artox_lab_clarc.navigation.config_navigation_loader'
+
+  ArtoxLab\Bundle\ClarcBundle\Core\Entity\Navigation\NavigationStorage: ~
