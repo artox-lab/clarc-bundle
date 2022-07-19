@@ -32,10 +32,6 @@ class AddAmqpRoutingKeyMiddleware implements MiddlewareInterface
      */
     private function getRoutingKey(Envelope $envelope): string
     {
-        $class = get_class($envelope->getMessage());
-        $key = str_replace('\\', '.', $class);
-        $key = preg_replace('/(?<!^|\.)[A-Z]/', '_$0', $key);
-
-        return strtolower($key);
+        return str_replace('\\', '.', get_class($envelope->getMessage()));
     }
 }

@@ -18,6 +18,8 @@ use Symfony\Component\Messenger\Transport\Serialization\SerializerInterface;
 class ProtobufSerializer implements SerializerInterface
 {
     private const STAMP_HEADER_PREFIX = 'X-Message-Stamp-';
+    private const HEADER_PRODUCER_LANG = 'ProducerLang';
+    private const HEADER_PROTO_TYPE = 'ProtoType';
 
     private string $format;
 
@@ -32,11 +34,11 @@ class ProtobufSerializer implements SerializerInterface
             throw new MessageDecodingFailedException('Encoded envelope should have at least a "body" and some "headers", or maybe you should implement your own serializer.');
         }
 
-        if (empty($encodedEnvelope['headers']['type'])) {
-            throw new MessageDecodingFailedException('Encoded envelope does not have a "type" header.');
+        if (empty($encodedEnvelope['headers'][self::HEADER_PROTO_TYPE])) {
+            throw new MessageDecodingFailedException('Encoded envelope does not have a "' . self::HEADER_PROTO_TYPE . '" header.');
         }
 
-        $messageClass = $this->getClassFromMessageType($encodedEnvelope['headers']['type']);
+        $messageClass = $this->getClassFromMessageType($encodedEnvelope['headers'][self::HEADER_PROTO_TYPE]);
 
         if (false === class_exists($messageClass)) {
             throw new MessageDecodingFailedException(sprintf('Message class "%s" not found during decoding.', $messageClass));
@@ -66,7 +68,11 @@ class ProtobufSerializer implements SerializerInterface
             );
         }
 
-        $headers = ['type' => $this->getMessageType($envelope)] + $this->encodeStamps($envelope) + $this->getContentTypeHeader();
+        $headers = [
+            self::HEADER_PROTO_TYPE => $this->getMessageType($envelope),
+            self::HEADER_PRODUCER_LANG => 'php',
+        ];
+        $headers += $this->encodeStamps($envelope) + $this->getContentTypeHeader();
 
         return [
             'body' => $envelope->getMessage()->serializeToJsonString(),
@@ -83,11 +89,7 @@ class ProtobufSerializer implements SerializerInterface
      */
     private function getMessageType(Envelope $envelope): string
     {
-        $class = get_class($envelope->getMessage());
-        $type = str_replace('\\', '.', $class);
-        $type = preg_replace('/(?<!^|\.)[A-Z]/', '_$0', $type);
-
-        return strtolower($type);
+        return str_replace('\\', '.', get_class($envelope->getMessage()));
     }
 
     /**
@@ -95,11 +97,7 @@ class ProtobufSerializer implements SerializerInterface
      */
     private function getClassFromMessageType(string $type): string
     {
-        $class = preg_replace_callback('/(?<=^|\.|_)[a-z]/', function ($matches) {
-            return strtoupper($matches[0]);
-        }, $type);
-
-        return str_replace(['.', '_'], ['\\', ''], $class);
+        return implode('\\', array_map('ucfirst', explode('.', $type)));
     }
 
     private function decodeStamps(array $encodedEnvelope): array
