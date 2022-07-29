@@ -72,25 +72,10 @@ class ArtoxLabClarcExtension extends Extension implements PrependExtensionInterf
                         ],
                     ],
                 ],
-                'transports'  => [
-                    'sync' => 'sync://',
-                    'broadcasting' => [
-                        'dsn' => '%env(BROADCASTING_MESSENGER_TRANSPORT_DSN)%',
-                        'serializer' => 'artox_lab_clarc.messenger.transport.serializer.protobuf_self_origin_stamps',
-                    ],
-                    'listening' => [
-                        'dsn' => '%env(LISTENING_MESSENGER_TRANSPORT_DSN)%',
-                        'serializer' => 'artox_lab_clarc.messenger.transport.serializer.protobuf_self_origin_stamps',
-                    ],
-                    'failure_listening' => [
-                        'dsn' => '%env(FAILURE_LISTENING_MESSENGER_TRANSPORT_DSN)%',
-                        'serializer' => 'artox_lab_clarc.messenger.transport.serializer.protobuf',
-                    ],
-                ],
+                'transports' => ['sync' => 'sync://'],
                 'routing'     => [
                     AbstractCommand::class => 'sync',
                     AbstractQuery::class   => 'sync',
-                    \Google\Protobuf\Internal\Message::class => 'broadcasting',
                 ],
             ],
         ];

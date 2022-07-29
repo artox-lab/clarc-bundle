@@ -39,6 +39,10 @@ framework:
                     queues:
                         listening_events:
                             binding_keys: [ 'lerna.events.marketplace.v1.#' ]
+                failure_transport: failure_listening
+            failure_listening:
+                dsn: '%env(FAILURE_LISTENING_MESSENGER_TRANSPORT_DSN)%'
+                serializer: 'artox_lab_clarc.messenger.transport.serializer.protobuf'
 ```
 
 ### 3. Configure environment variables for transports in `.env` file
@@ -50,9 +54,21 @@ BROADCASTING_MESSENGER_TRANSPORT_EXCHANGE=messages-shared-exchange
 # Listening transport
 LISTENING_MESSENGER_TRANSPORT_DSN=amqp://user:password@hostname:5672/vhost
 LISTENING_MESSENGER_TRANSPORT_EXCHANGE=messages-shared-exchange
+# Failure listening transport
+FAILURE_LISTENING_MESSENGER_TRANSPORT_DSN=doctrine://default
 ```
 
 ### 4. Producing messages
+
+#### Configure routing
+
+```yaml
+# config/packages/messenger.yaml
+framework:
+  messenger:
+    routing:
+      'Google\Protobuf\Internal\Message': broadcasting
+```
 
 In some place of application you should inject `BroadcastingBus` and dispatch message through it.
 
