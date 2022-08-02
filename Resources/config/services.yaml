@@ -76,6 +76,10 @@ services:
     class: ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Security\Voters\RolePermissionVoter
     tags: ['security.voter']
 
+  artox_lab_clarc.security.voter.cli:
+    class: ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Security\Voters\CliVoter
+    tags: [ 'security.voter' ]
+
   # Navigation
   artox_lab_clarc.navigation.config_navigation_loader:
     class: ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Navigation\ConfigLoader
