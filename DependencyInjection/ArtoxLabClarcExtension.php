@@ -62,8 +62,17 @@ class ArtoxLabClarcExtension extends Extension implements PrependExtensionInterf
                         'default_middleware' => 'allow_no_handlers',
                         'middleware'         => ['artox_lab_clarc.bus.validation'],
                     ],
+                    'listening.bus' => [
+                        'default_middleware' => 'allow_no_handlers',
+                    ],
+                    'broadcasting.bus' => [
+                        'default_middleware' => 'allow_no_handlers',
+                        'middleware'         => [
+                            'artox_lab_clarc.messenger.middleware.add_amqp_routing_key',
+                        ],
+                    ],
                 ],
-                'transports'  => ['sync' => 'sync://'],
+                'transports' => ['sync' => 'sync://'],
                 'routing'     => [
                     AbstractCommand::class => 'sync',
                     AbstractQuery::class   => 'sync',
@@ -99,6 +108,7 @@ class ArtoxLabClarcExtension extends Extension implements PrependExtensionInterf
         $this->loadApi(($config['api'] ?? []), $container);
         $this->loadSecurity($config['security'] ?? [], $container);
         $this->loadNavigation($config['navigation'] ?? [], $container);
+        $this->registerMessengerConfiguration($config['messenger'], $container);
     }
 
     /**
@@ -128,6 +138,31 @@ class ArtoxLabClarcExtension extends Extension implements PrependExtensionInterf
         $container
             ->getDefinition('artox_lab_clarc.navigation.config_navigation_loader')
             ->replaceArgument(0, $config);
+    }
+
+    private function registerMessengerConfiguration(array $config, ContainerBuilder $container): void
+    {
+        $transportBusMap = [
+            'listening' => 'listening.bus',
+        ];
+
+        foreach ($config['transports'] as $transportId => $transport) {
+            if (!$container->hasDefinition('messenger.transport.' . $transportId)) {
+                throw new \RuntimeException(sprintf('Undefined transport with id "%s".', $transportId));
+            }
+
+            if (null !== $transport['bus']) {
+                if (!$container->hasDefinition('messenger.bus.' . $transport['bus'])) {
+                    throw new \RuntimeException(sprintf('Undefined message bus with id "%s".', $transport['bus']));
+                }
+
+                // Merge array to prevent redeclare required mapping.
+                $transportBusMap += [$transportId => $transport['bus']];
+            }
+        }
+
+        $container->getDefinition('artox_lab_clarc.messenger.listener.add_bus_name_stamp_listener')
+            ->replaceArgument(0, $transportBusMap);
     }
 
 }

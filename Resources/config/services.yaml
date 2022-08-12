@@ -26,6 +26,37 @@ services:
   artox_lab_clarc.bus.validation:
     class: ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Bus\Middleware\ValidationMiddleware
 
+  artox_lab_clarc.messenger.middleware.add_amqp_routing_key:
+    class: ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Bus\Middleware\AddAmqpRoutingKeyMiddleware
+
+  artox_lab_clarc.messenger.transport.serializer.protobuf:
+    class: ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Bus\Transport\Serialization\ProtobufSerializer
+
+  artox_lab_clarc.messenger.transport.serializer.protobuf_self_origin_stamps:
+    class: ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Bus\Transport\Serialization\SelfOriginStampsSerializerDecorator
+    arguments:
+      - '@artox_lab_clarc.messenger.transport.serializer.protobuf'
+      - '@artox_lab_clarc.signature.string_signer'
+      - 'X-Message-Stamp-'
+
+  artox_lab_clarc.signature.string_signer:
+    class: ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Services\Signature\StringSigner
+    arguments:
+      - '%kernel.secret%'
+
+  ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Bus\EventListener\:
+    resource: '../../Core/Interfaces/Bus/EventListener'
+
+  artox_lab_clarc.messenger.listener.add_bus_name_stamp_listener:
+    class: ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Bus\EventListener\AddBusNameStampListener
+    arguments:
+      - !abstract mapping transports to buses
+
+  ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Bus\EventListener\AddBusNameStampListener:
+    alias: artox_lab_clarc.messenger.listener.add_bus_name_stamp_listener
+
+  ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Bus\BroadcastingBus: ~
+
   api_exception_subscriber:
     class: ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\UI\API\EventListeners\ExceptionSubscriber
     arguments:

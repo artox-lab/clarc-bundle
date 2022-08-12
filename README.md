@@ -141,3 +141,7 @@ security:
 ```
 
 4. Call API  `GET /user/navigations` with authentication
+
+# Learn more
+
+- [Messaging between services](doc/message_bus/services_communication/index.md)

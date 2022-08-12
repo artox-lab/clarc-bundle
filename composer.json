@@ -13,6 +13,7 @@
         "php": ">=7.4 || ^8.0",
         "ext-json": "*",
         "doctrine/annotations": "^1.12",
+        "google/protobuf": "^3.3",
         "league/fractal": "^0.19",
         "liip/monitor-bundle": "^2.16",
         "pagerfanta/pagerfanta": "^3.0",
