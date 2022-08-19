@@ -1,5 +1,5 @@
 {
-    "name": "artox-lab/clarc-bundle",
+    "name": "lilmot/clarc-bundle",
     "description": "Build Symfony project within Clean Architecture",
     "type": "symfony-bundle",
     "license": "MIT",
