@@ -22,7 +22,7 @@ class RolePermissionVoter extends Voter
         return true;
     }
 
-    protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token)
+    protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token): bool
     {
         return in_array($attribute, $this->permissionStorage->getPermissions(), true);
     }

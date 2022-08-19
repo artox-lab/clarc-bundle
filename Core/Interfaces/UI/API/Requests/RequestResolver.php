@@ -47,7 +47,7 @@ class RequestResolver implements ArgumentValueResolverInterface
      * @return bool
      * @throws ReflectionException
      */
-    public function supports(Request $request, ArgumentMetadata $argument)
+    public function supports(Request $request, ArgumentMetadata $argument): bool
     {
         if (is_null($argument->getType()) === true) {
             return false;
@@ -74,7 +74,7 @@ class RequestResolver implements ArgumentValueResolverInterface
      *
      * @return Generator
      */
-    public function resolve(Request $request, ArgumentMetadata $argument)
+    public function resolve(Request $request, ArgumentMetadata $argument): iterable
     {
         // Creating new instance of custom request DTO.
         $class = $argument->getType();

@@ -14,7 +14,7 @@ class CliVoter extends Voter
         return 'cli' === PHP_SAPI;
     }
 
-    protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token)
+    protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token): bool
     {
         return true;
     }
