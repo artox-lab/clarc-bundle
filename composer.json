@@ -14,7 +14,7 @@
         "ext-json": "*",
         "doctrine/annotations": "^1.12",
         "google/protobuf": "^3.3",
-        "league/fractal": "^0.19",
+        "league/fractal": "^0.20",
         "liip/monitor-bundle": "^2.16",
         "pagerfanta/pagerfanta": "^3.0",
         "symfony-bundles/json-request-bundle": "^4.0",
