@@ -19,7 +19,7 @@ class NullObjectArraySerializer extends DataArraySerializer
      *
      * @return null
      */
-    public function null()
+    public function null(): ?array
     {
         return null;
     }
