@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## 1.0.0
++ Add support php ^8.0
++ Add support symfony ^6.0
+
+---
+
+# DEPRECATED
+
+> Use ^1.0.0
+
 ## 5.2.12
 + Added built-in transport and buses for communication between services
 + Added `BroadcastingBus` to dispatch message to external services
