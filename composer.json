@@ -18,16 +18,16 @@
         "liip/monitor-bundle": "^2.16",
         "pagerfanta/pagerfanta": "^3.0",
         "symfony-bundles/json-request-bundle": "^4.0",
-        "symfony/framework-bundle": "^5.2",
-        "symfony/messenger": "^5.2",
-        "symfony/translation": "^5.2",
-        "symfony/validator": "^5.2"
+        "symfony/framework-bundle": "^5.2 || ^6.0",
+        "symfony/messenger": "^5.2 || ^6.0",
+        "symfony/translation": "^5.2 || ^6.0",
+        "symfony/validator": "^5.2 || ^6.0"
     },
     "require-dev": {
         "haydenpierce/class-finder": "^0.4.0",
         "phpunit/phpunit": "^9.5",
         "roave/security-advisories": "dev-master",
-        "symfony/maker-bundle": "^1.29"
+        "symfony/maker-bundle": "^1.31"
     },
     "config": {
         "sort-packages": true
