@@ -7,8 +7,6 @@
 
 namespace ArtoxLab\Bundle\ClarcBundle\Core\UseCases\Queries\User\FindAllPermissions;
 
-use ArtoxLab\Bundle\ClarcBundle\Core\UseCases\Queries\AbstractQuery;
-
-class Command extends AbstractQuery
+class Command
 {
 }

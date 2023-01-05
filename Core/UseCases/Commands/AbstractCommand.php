@@ -9,6 +9,9 @@ declare(strict_types=1);
 
 namespace ArtoxLab\Bundle\ClarcBundle\Core\UseCases\Commands;
 
+/**
+ * @deprecated Use pure class
+ */
 class AbstractCommand
 {
 

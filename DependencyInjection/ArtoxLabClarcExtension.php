@@ -10,8 +10,6 @@ declare(strict_types=1);
 
 namespace ArtoxLab\Bundle\ClarcBundle\DependencyInjection;
 
-use ArtoxLab\Bundle\ClarcBundle\Core\UseCases\Commands\AbstractCommand;
-use ArtoxLab\Bundle\ClarcBundle\Core\UseCases\Queries\AbstractQuery;
 use Exception;
 use InvalidArgumentException;
 use Symfony\Component\Config\FileLocator;
@@ -71,11 +69,6 @@ class ArtoxLabClarcExtension extends Extension implements PrependExtensionInterf
                             'artox_lab_clarc.messenger.middleware.add_amqp_routing_key',
                         ],
                     ],
-                ],
-                'transports' => ['sync' => 'sync://'],
-                'routing'     => [
-                    AbstractCommand::class => 'sync',
-                    AbstractQuery::class   => 'sync',
                 ],
             ],
         ];

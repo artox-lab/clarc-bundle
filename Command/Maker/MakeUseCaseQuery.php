@@ -11,7 +11,6 @@ namespace ArtoxLab\Bundle\ClarcBundle\Command\Maker;
 
 use ArtoxLab\Bundle\ClarcBundle\Core\UseCases\Commands\AbstractInteractor;
 use ArtoxLab\Bundle\ClarcBundle\Core\UseCases\Interfaces\PaginatorInterface;
-use ArtoxLab\Bundle\ClarcBundle\Core\UseCases\Queries\AbstractQuery;
 use Exception;
 use HaydenPierce\ClassFinder\ClassFinder;
 use Symfony\Bundle\MakerBundle\ConsoleStyle;
@@ -68,7 +67,6 @@ class MakeUseCaseQuery extends AbstractMaker
      */
     public function configureDependencies(DependencyBuilder $dependencies): void
     {
-        $dependencies->addClassDependency(AbstractQuery::class, 'clarc-bundle');
         $dependencies->addClassDependency(AbstractInteractor::class, 'clarc-bundle');
         $dependencies->addClassDependency(PaginatorInterface::class, 'clarc-bundle');
     }
