@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace ArtoxLab\Bundle\ClarcBundle\Command\Maker;
 
-use ArtoxLab\Bundle\ClarcBundle\Core\UseCases\Commands\AbstractCommand;
 use ArtoxLab\Bundle\ClarcBundle\Core\UseCases\Commands\AbstractInteractor;
 use ArtoxLab\Bundle\ClarcBundle\Core\UseCases\Interfaces\PaginatorInterface;
 use Exception;
@@ -65,7 +64,6 @@ class MakeUseCaseCommand extends AbstractMaker
      */
     public function configureDependencies(DependencyBuilder $dependencies): void
     {
-        $dependencies->addClassDependency(AbstractCommand::class, 'clarc-bundle');
         $dependencies->addClassDependency(AbstractInteractor::class, 'clarc-bundle');
         $dependencies->addClassDependency(PaginatorInterface::class, 'clarc-bundle');
     }

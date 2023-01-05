@@ -9,9 +9,7 @@ declare(strict_types=1);
 
 namespace <?= $namespace; ?>;
 
-use ArtoxLab\Bundle\ClarcBundle\Core\UseCases\Queries\AbstractQuery;
-
-class <?= $class_name ?> extends AbstractQuery
+class <?= $class_name ?>
 {
 
 }
