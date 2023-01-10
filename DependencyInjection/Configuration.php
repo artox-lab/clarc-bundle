@@ -114,6 +114,9 @@ class Configuration implements ConfigurationInterface
                             ->end()
                         ->end()
                     ->end()
+                     ->children()
+                        ->booleanNode('detailed_error_details')->defaultFalse()->end()
+                    ->end()
                 ->end()
             ->end()
         ;
