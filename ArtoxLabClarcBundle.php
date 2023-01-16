@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace ArtoxLab\Bundle\ClarcBundle;
 
 use ArtoxLab\Bundle\ClarcBundle\DependencyInjection\IgnoreDoctrineAnnotationReaderPass;
+use ArtoxLab\Bundle\ClarcBundle\DependencyInjection\MessengerPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -22,5 +23,6 @@ class ArtoxLabClarcBundle extends Bundle
         parent::build($container);
 
         $container->addCompilerPass(new IgnoreDoctrineAnnotationReaderPass());
+        $container->addCompilerPass(new MessengerPass());
     }
 }
