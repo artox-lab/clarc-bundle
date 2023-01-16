@@ -67,6 +67,7 @@ class ArtoxLabClarcExtension extends Extension implements PrependExtensionInterf
                         'default_middleware' => 'allow_no_handlers',
                         'middleware'         => [
                             'artox_lab_clarc.messenger.middleware.add_amqp_routing_key',
+                            'artox_lab_clarc.messenger.middleware.add_unique_id',
                         ],
                     ],
                 ],

@@ -29,6 +29,9 @@ services:
   artox_lab_clarc.messenger.middleware.add_amqp_routing_key:
     class: ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Bus\Middleware\AddAmqpRoutingKeyMiddleware
 
+  artox_lab_clarc.messenger.middleware.add_unique_id:
+    class: ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Bus\Middleware\AddUniqueIdStampMiddleware
+
   artox_lab_clarc.messenger.transport.serializer.protobuf:
     class: ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Bus\Transport\Serialization\ProtobufSerializer
 

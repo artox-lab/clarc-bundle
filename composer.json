@@ -27,7 +27,8 @@
         "haydenpierce/class-finder": "^0.4.0",
         "phpunit/phpunit": "^9.5",
         "roave/security-advisories": "dev-latest",
-        "symfony/maker-bundle": "^1.31"
+        "symfony/maker-bundle": "^1.31",
+        "ramsey/uuid": "^3.0 || ^4.0"
     },
     "config": {
         "sort-packages": true
