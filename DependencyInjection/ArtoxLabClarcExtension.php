@@ -156,6 +156,10 @@ class ArtoxLabClarcExtension extends Extension implements PrependExtensionInterf
 
         $container->getDefinition('artox_lab_clarc.messenger.listener.add_bus_name_stamp_listener')
             ->replaceArgument(0, $transportBusMap);
+
+        if (true === $config['detailed_error_details']) {
+            $container->removeDefinition(\ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\Bus\EventListener\AddErrorDetailsStampListener::class);
+        }
     }
 
 }
