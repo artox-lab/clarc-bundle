@@ -30,7 +30,7 @@ class ClearAmqpEnvelopeHeadersOnMessageFailureListener implements EventSubscribe
     {
         return [
             // must have higher priority than SendFailedMessageForRetryListener
-            WorkerMessageFailedEvent::class => ['onMessageFailed', 200],
+            WorkerMessageFailedEvent::class => ['onMessageFailed', 300],
         ];
     }
 }
