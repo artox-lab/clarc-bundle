@@ -35,6 +35,6 @@ class PermissionStorage implements \ArtoxLab\Bundle\ClarcBundle\Core\Entity\Secu
             return $this->permissionLoader->loadByRole($roleName);
         }, $token->getRoleNames());
 
-        return array_unique(array_merge(...$permissions));
+        return array_values(array_unique(array_merge(...$permissions)));
     }
 }
