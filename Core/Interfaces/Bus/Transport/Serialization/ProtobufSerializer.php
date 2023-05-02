@@ -89,7 +89,12 @@ class ProtobufSerializer implements SerializerInterface
      */
     private function getMessageType(Envelope $envelope): string
     {
-        return str_replace('\\', '.', get_class($envelope->getMessage()));
+        $pathMap   = explode('\\', get_class($envelope->getMessage()));
+        $shortName = (string) array_pop($pathMap);
+        $pathMap   = array_map('strtolower', $pathMap);
+        $pathMap   += [$shortName];
+
+        return implode('.', $pathMap);
     }
 
     /**
@@ -136,7 +141,7 @@ class ProtobufSerializer implements SerializerInterface
     {
         $mimeType = $this->getMimeTypeForFormat();
 
-        return null === $mimeType ? [] : ['Content-Type' => $mimeType];
+        return null === $mimeType ? [] : ['Content-Type' => $mimeType, 'ContentType' => $mimeType];
     }
 
     private function getMimeTypeForFormat(): ?string
