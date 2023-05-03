@@ -92,7 +92,7 @@ class ProtobufSerializer implements SerializerInterface
         $pathMap   = explode('\\', get_class($envelope->getMessage()));
         $shortName = (string) array_pop($pathMap);
         $pathMap   = array_map('strtolower', $pathMap);
-        $pathMap   += [$shortName];
+        $pathMap[] = $shortName;
 
         return implode('.', $pathMap);
     }
