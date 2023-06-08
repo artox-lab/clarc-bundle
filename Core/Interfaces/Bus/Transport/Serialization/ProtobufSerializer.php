@@ -52,7 +52,14 @@ class ProtobufSerializer implements SerializerInterface
             $message = new $messageClass();
             $message->mergeFromJsonString($encodedEnvelope['body']);
         } catch (\Throwable $e) {
-            throw new MessageDecodingFailedException('Could not decode message: '.$e->getMessage(), $e->getCode(), $e);
+            throw new MessageDecodingFailedException(
+                sprintf('Could not decode message: %s Body: %s',
+                    $e->getMessage(),
+                    $encodedEnvelope['body']
+                ),
+                $e->getCode(),
+                $e
+            );
         }
 
         return new Envelope($message, $this->decodeStamps($encodedEnvelope));
