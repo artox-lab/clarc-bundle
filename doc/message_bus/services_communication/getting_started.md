@@ -102,9 +102,10 @@ class SomeClass
 ```php
 <?php
 
-use \Symfony\Component\Messenger\Handler\MessageHandlerInterface;
+use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
-class MessageHandler implements MessageHandlerInterface
+#[AsMessageHandler]
+class MessageHandler
 {
     public function __invoke(\ArtoxLab\ExampleMessage\V1\Order\Created $message)
     {

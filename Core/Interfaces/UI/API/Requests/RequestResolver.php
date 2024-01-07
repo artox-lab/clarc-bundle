@@ -14,12 +14,12 @@ use Generator;
 use ReflectionClass;
 use ReflectionException;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface;
+use Symfony\Component\HttpKernel\Controller\ValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class RequestResolver implements ArgumentValueResolverInterface
+class RequestResolver implements ValueResolverInterface
 {
     /**
      * Validator
@@ -47,7 +47,7 @@ class RequestResolver implements ArgumentValueResolverInterface
      * @return bool
      * @throws ReflectionException
      */
-    public function supports(Request $request, ArgumentMetadata $argument): bool
+    public function supports(ArgumentMetadata $argument): bool
     {
         if (is_null($argument->getType()) === true) {
             return false;
@@ -76,6 +76,10 @@ class RequestResolver implements ArgumentValueResolverInterface
      */
     public function resolve(Request $request, ArgumentMetadata $argument): iterable
     {
+        if (!$this->supports($argument)) {
+            return [];
+        }
+
         // Creating new instance of custom request DTO.
         $class = $argument->getType();
         $dto   = new $class($request);

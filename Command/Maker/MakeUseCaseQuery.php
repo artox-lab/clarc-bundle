@@ -36,6 +36,11 @@ class MakeUseCaseQuery extends AbstractMaker
         return 'make:use-case:query';
     }
 
+    public static function getCommandDescription(): string
+    {
+        return 'Make command query for use case';
+    }
+
     /**
      * Configure the command: set description, input arguments, options, etc.
      *
