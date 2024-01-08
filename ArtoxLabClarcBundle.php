@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace ArtoxLab\Bundle\ClarcBundle;
 
+use ArtoxLab\Bundle\ClarcBundle\Core\UseCases\Commands\AbstractInteractor;
 use ArtoxLab\Bundle\ClarcBundle\DependencyInjection\IgnoreDoctrineAnnotationReaderPass;
 use ArtoxLab\Bundle\ClarcBundle\DependencyInjection\MessengerPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -24,5 +25,9 @@ class ArtoxLabClarcBundle extends Bundle
 
         $container->addCompilerPass(new IgnoreDoctrineAnnotationReaderPass());
         $container->addCompilerPass(new MessengerPass());
+
+        $container
+            ->registerForAutoconfiguration(AbstractInteractor::class)
+            ->addTag('messenger.message_handler');
     }
 }

@@ -33,6 +33,11 @@ class MakeUseCaseCommand extends AbstractMaker
         return 'make:use-case:command';
     }
 
+    public static function getCommandDescription(): string
+    {
+        return 'Make command for use case';
+    }
+
     /**
      * Configure the command: set description, input arguments, options, etc.
      *

@@ -10,19 +10,19 @@
         }
     ],
     "require": {
-        "php": ">=7.4 || ^8.0",
+        "php": ">=8.0",
         "ext-json": "*",
-        "doctrine/annotations": "^2.0",
+        "doctrine/annotations": "^1.12|^2.0",
         "google/protobuf": "^3.3",
         "league/fractal": "^0.20",
         "liip/monitor-bundle": "^2.16",
         "pagerfanta/pagerfanta": "^3.0",
         "symfony-bundles/json-request-bundle": "^4.0",
-        "symfony/framework-bundle": "^5.2 || ^6.0",
-        "symfony/messenger": "^5.2 || ^6.0",
-        "symfony/security-bundle": "^5.2 || ^6.0",
-        "symfony/translation": "^5.2 || ^6.0",
-        "symfony/validator": "^5.2 || ^6.0"
+        "symfony/framework-bundle": "^5.4 || ^6.0 || ^7.0",
+        "symfony/messenger": "^5.4 || ^6.0 || ^7.0",
+        "symfony/security-bundle": "^5.4 || ^6.0 || ^7.0",
+        "symfony/translation": "^5.4 || ^6.0 || ^7.0",
+        "symfony/validator": "^5.4 || ^6.0 || ^7.0"
     },
     "require-dev": {
         "haydenpierce/class-finder": "^0.4.0",
