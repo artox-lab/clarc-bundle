@@ -7,34 +7,21 @@ declare(strict_types=1);
 
 namespace ArtoxLab\Bundle\ClarcBundle\Core\Interfaces\UI\API\Controllers;
 
+use OpenApi\Attributes as OA;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 class PingPongController extends AbstractController
 {
     /**
-     * @SWG\Get(
-     *     path="/ping",
-     *     summary="Ping reuqest",
-     *     tags={"HealtCheck"},
-     *     description="Ping-Pong health check GET http route",
-     *     operationId="ping",
-     *     produces={"text/plain"},
-     *     @SWG\Response(
-     *         response=200,
-     *         description="pong",
-     *     )
-     * )
-     */
-
-    /**
      * Health check ping route
-     *
-     * @return Response
      */
+    #[Route(path: '/ping', name: 'artox_lab_ping', methods: ['GET'])]
+    #[OA\Tag(name: 'HealthCheck')]
+    #[OA\Response(response: '200', description: 'pong')]
     public function ping() : Response
     {
         return new Response('pong', 200, ['Content-Type' => 'text/plain']);
     }
-
 }
