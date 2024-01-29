@@ -13,6 +13,29 @@ use League\Fractal\Serializer\DataArraySerializer;
 
 class NullObjectArraySerializer extends DataArraySerializer
 {
+    /**
+     * {@inheritDoc}
+     */
+    public function collection(?string $resourceKey, array $data): array
+    {
+        if ($resourceKey != null) {
+            return [$resourceKey => $data];
+        }
+
+        return $data;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function item(?string $resourceKey, array $data): array
+    {
+        if ($resourceKey != null) {
+            return [$resourceKey => $data];
+        }
+
+        return $data;
+    }
 
     /**
      * Empty value in response

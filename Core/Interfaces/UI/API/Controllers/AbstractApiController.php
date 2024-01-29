@@ -26,6 +26,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AbstractApiController extends AbstractController
 {
+    const ROOT_RESOURCE_KEY = 'data';
 
     /**
      * Fractal serializer
@@ -64,7 +65,7 @@ class AbstractApiController extends AbstractController
         $this->commandBus        = $commandBus;
         $this->queryBus          = $queryBus;
     }
-    
+
     /**
      * Response with Cache-Control header
      *
@@ -137,12 +138,12 @@ class AbstractApiController extends AbstractController
                     return $router->generate($route, $newParams, 0);
                 }
             );
-            $resource         = new Collection($results, $transformer);
+            $resource         = new Collection($results, $transformer, self::ROOT_RESOURCE_KEY);
             $resource->setPaginator($paginatorAdapter);
         } else if (is_array($data) === true && (is_numeric(key($data)) === true || empty($data) === true)) {
-            $resource = new Collection($data, $transformer);
+            $resource = new Collection($data, $transformer, self::ROOT_RESOURCE_KEY);
         } else {
-            $resource = new Item($data, $transformer);
+            $resource = new Item($data, $transformer, self::ROOT_RESOURCE_KEY);
         }
 
         $fractal = new Manager();
