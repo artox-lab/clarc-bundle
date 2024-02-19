@@ -29,7 +29,7 @@ class NavigationTransformer extends TransformerAbstract
                 return $items;
             }, $navigation->items()->toArray());
 
-            $result[$navigationName] = array_filter($result[$navigationName]);
+            $result[$navigationName] = array_values(array_filter($result[$navigationName]));
         }
 
         return array_filter($result);
