@@ -12,7 +12,6 @@
     "require": {
         "php": ">=8.0",
         "ext-json": "*",
-        "doctrine/annotations": "^1.12|^2.0",
         "google/protobuf": "^3.3",
         "league/fractal": "^0.20",
         "liip/monitor-bundle": "^2.16",
